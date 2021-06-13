@@ -3,8 +3,9 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.9996380423585636 -0.023244713845608306 -0.013545019297668845 1.4073124647405264
-  position 3.07717287933767 4.12048456974703 4.589877889548049
+  orientation -0.999883531085651 -0.015132534424415684 -0.0019825906244513814 1.0669963701692717
+  position 0.07973050180458957 3.0885335326447185 1.878836913705975
+  follow "e-puck"
 }
 TexturedBackground {
 }
@@ -16,20 +17,77 @@ RectangleArena {
   floorTileSize 2 2
   wallHeight 0.5
 }
+E-puck {
+  translation 0.5 8.27181e-25 0.5
+  rotation 0.010601265533916326 -0.9999437128145245 -0.000429385 0
+  controller "using_distance_sensor"
+  turretSlot [
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+}
 Robot {
   translation 3.39928 0 3.3687
   children [
-    Laptop {
+    DEF laptop Laptop {
       rotation 0 1 0 3.14159
     }
   ]
   name "robot(1)"
+  physics Physics {
+  }
   recognitionColors [
     1 0 0
   ]
 }
 DEF mybot Robot {
-  translation 0.550552 0.07 -0.377609
+  translation 0.49961 0.07 -1.1465
   children [
     DEF WHEEL HingeJoint {
       jointParameters HingeJointParameters {
@@ -154,38 +212,6 @@ DEF mybot Robot {
   boundingObject USE BODY
   physics Physics {
   }
-}
-E-puck {
-  translation 3.3995 0 4.12617
-  controller "intermidiateepuck"
-  turretSlot [
-    Camera {
-      name "camera_on_turret"
-      recognitionColors [
-        1 0 0
-      ]
-    }
-    RobotisLds01 {
-    }
-  ]
-}
-Ball {
-  translation 0.269182 0.0325 4.29364
-  color 1 1 1
-}
-AdvertisingBoard {
-  translation -2.08113 0 4.5221
-  rotation 0 1 0 1.5708
-  frontTexture [
-    "textures/roughcast.jpg"
-  ]
-  recognitionColors [
-    1 1 1
-  ]
-  displayBackLight TRUE
-  displayWidth 0.25
-  displayHeight 0.4
-  frameThickness 0.1
 }
 Wall {
   translation 1 0 4.5

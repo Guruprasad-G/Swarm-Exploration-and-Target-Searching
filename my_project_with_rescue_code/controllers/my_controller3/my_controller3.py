@@ -1,4 +1,4 @@
-from controller import Robot,Camera
+from controller import Robot
 import math
 import struct
 
@@ -14,14 +14,18 @@ robot = Robot()
 wheel_left = robot.getDevice("left wheel motor")
 wheel_right = robot.getDevice("right wheel motor")
 
-colour_camera = robot.getDevice("camera_on_turret")
-try:
-    colour_camera.enable(timestep)
+camera= robot.getDevice("camera1")
+camera.enable(timestep)
+camera.recognitionEnable(timestep)
 
-#emitter= robot.getDevice("emitter")
 
-#gps= robot.getDevice("gps")
-#gps.enable(timestep)
+colour_camera= robot.getDevice("colour_sensor")
+colour_camera.enable(timestep)
+
+emitter= robot.getDevice("emitter")
+
+gps= robot.getDevice("gps")
+gps.enable(timestep)
 
 
 
@@ -213,4 +217,3 @@ while robot.step(timestep) != -1:
 
     wheel_left.setVelocity(speeds[0])
     wheel_right.setVelocity(speeds[1])
-
