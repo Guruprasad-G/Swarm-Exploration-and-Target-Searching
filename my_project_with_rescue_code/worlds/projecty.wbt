@@ -1,10 +1,13 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
+  info [
+    ""
+  ]
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.999883531085651 -0.015132534424415684 -0.0019825906244513814 1.0669963701692717
-  position 0.07973050180458957 3.0885335326447185 1.878836913705975
+  orientation -0.9998682286706337 -0.016159842623326162 -0.0015442737577561754 0.9970050402853948
+  position 0.04358518941039084 3.180564023944151 1.971059811855287
   follow "e-puck"
 }
 TexturedBackground {
@@ -18,10 +21,13 @@ RectangleArena {
   wallHeight 0.5
 }
 E-puck {
-  translation 0.5 8.27181e-25 0.5
+  translation 0.5 0 0.5
   rotation 0.010601265533916326 -0.9999437128145245 -0.000429385 0
-  controller "using_distance_sensor"
+  controller "using_gps"
   turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
     DistanceSensor {
       translation -7.34639e-08 -0.009 -0.04
       rotation 0 1 0 1.5708
@@ -69,6 +75,11 @@ E-puck {
       height 250
       recognition Recognition {
       }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
     }
   ]
 }
