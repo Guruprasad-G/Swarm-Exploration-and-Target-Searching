@@ -1,31 +1,24 @@
+"""delay_at_midpoints controller."""
 from controller import Robot
-
+#declaring timestep and maximum velocity.
 timeStep = 32
 max_velocity = 6.28
-
+#creating instance of robot class
 robot = Robot()
-
+#accessing and enabling required components in the robot
 camera = robot.getDevice("colour_camera")
 camera.enable(timeStep)
-
 gps = robot.getDevice("gps")
 gps.enable(timeStep)
-
 compass = robot.getDevice("compass")
 compass.enable(timeStep)
-
 up_sensor = robot.getDevice("up_sensor")
 up_sensor.enable(timeStep)
-
 right_sensor = robot.getDevice("right_sensor")
-right_sensor.enable(timeStep)
-
 left_sensor = robot.getDevice("left_sensor")
 left_sensor.enable(timeStep)
-
 down_sensor = robot.getDevice("down_sensor")
 down_sensor.enable(timeStep)
-
 wheel_left = robot.getDevice("left wheel motor")
 wheel_right = robot.getDevice("right wheel motor")
 
@@ -48,7 +41,7 @@ leftSensors[0].enable(timeStep)
 leftSensors.append(robot.getDevice("ps6"))
 leftSensors[1].enable(timeStep)
 
-#        [left wheel speed, right wheel speed]
+#[left wheel speed, right wheel speed]
 speeds = [max_velocity,max_velocity]
 
 wheel_left.setPosition(float("inf"))
@@ -87,8 +80,12 @@ def move(name):
     else:
         pass
 time_counter = 0
+flag = 0
+starting_time = 0
+delay_done = False
 
 while robot.step(timeStep) != -1:
+    delay_done = False
     time_counter += timeStep
     X_pos = round(gps.getValues()[1],1)
     Z_pos = round(gps.getValues()[2],1) 
@@ -101,24 +98,41 @@ while robot.step(timeStep) != -1:
     left_distance = left_sensor.getValue()
     down_distance = down_sensor.getValue()
     priority_list = [["up",up_distance],["right",right_distance],["left",left_distance],["down",down_distance]]
+    print("X =",X_pos,"Z =",Z_pos)
     #print("distances","up:",up_distance,"right",right_distance,"left",left_distance,"down",down_distance)
     for name,value in priority_list:
         if value<0.5:
             pass
         else:
-            #print("Name :",name)
             move(name)
             break
-    if X_pos/0.5==0.0 and Z_pos/0.5==0.0:
+    if (X_pos%0.5==0 and Z_pos%0.5==0) and (flag==0) and not delay_done:
         print("Robot is in midpoint of a Square")
         print("Robot at","X value =",X_pos,"Z value =",Z_pos)
-    if Z_pos==0.0:
-        print("******************")
-        print("Time =",time_counter)
+        starting_time = time_counter
+        print("Starting time =",starting_time)
+        flag = 1
+        
+        
+    if starting_time!=0 and flag==1:
+        if time_counter<=starting_time+1000:
+            print("creating delay")
+            delay()
+            delay_done = True
+            
+    if time_counter>=starting_time+1000 and starting_time!=0:
+        print("exiting delay")
+        flag = 0
+        starting_time = 0
+    #print("X divide =",X_pos%0.5==0,"Z divide =",Z_pos%0.5==0)
+    #print("Flag =",flag,"Starting time =",starting_time)
+    #if Z_pos==0.0:
+    #    print("******************")
+    #    print("Time =",time_counter)
         #print("******************")
     
-    if time_counter>=4512 and time_counter<=7512:
-        delay()     
+    #if time_counter>=4512 and time_counter<=7512:
+    #    delay()     
     
     if up_distance<0.5:
         pass

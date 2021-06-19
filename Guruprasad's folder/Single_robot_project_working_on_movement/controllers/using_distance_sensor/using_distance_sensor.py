@@ -8,12 +8,6 @@ robot = Robot()
 camera = robot.getDevice("colour_camera")
 camera.enable(timeStep)
 
-gps = robot.getDevice("gps")
-gps.enable(timeStep)
-
-compass = robot.getDevice("compass")
-compass.enable(timeStep)
-
 up_sensor = robot.getDevice("up_sensor")
 up_sensor.enable(timeStep)
 
@@ -72,10 +66,6 @@ def spin():
     #set right wheel speed
     speeds[1] = -0.6 * max_velocity
 
-def delay():
-    speeds[0] = 0
-    speeds[1] = 0
-
 def move(name):
     if name=="up":
         speeds[0] = 0.9 * max_velocity
@@ -86,14 +76,8 @@ def move(name):
         turn_left()
     else:
         pass
-time_counter = 0
 
 while robot.step(timeStep) != -1:
-    time_counter += timeStep
-    X_pos = round(gps.getValues()[1],1)
-    Z_pos = round(gps.getValues()[2],1) 
-    
-    
     speeds[0] = max_velocity
     speeds[1] = max_velocity
     up_distance = up_sensor.getValue()
@@ -101,42 +85,29 @@ while robot.step(timeStep) != -1:
     left_distance = left_sensor.getValue()
     down_distance = down_sensor.getValue()
     priority_list = [["up",up_distance],["right",right_distance],["left",left_distance],["down",down_distance]]
-    #print("distances","up:",up_distance,"right",right_distance,"left",left_distance,"down",down_distance)
+    print("distances","up:",up_distance,"right",right_distance,"left",left_distance,"down",down_distance)
     for name,value in priority_list:
         if value<0.5:
             pass
         else:
-            #print("Name :",name)
+            print("Name :",name)
             move(name)
             break
-    if X_pos/0.5==0.0 and Z_pos/0.5==0.0:
-        print("Robot is in midpoint of a Square")
-        print("Robot at","X value =",X_pos,"Z value =",Z_pos)
-    if Z_pos==0.0:
-        print("******************")
-        print("Time =",time_counter)
-        #print("******************")
-    
-    if time_counter>=4512 and time_counter<=7512:
-        delay()     
+            
     
     if up_distance<0.5:
-        pass
-        #print("Up Distance is less than 0.5")
+        print("Up Distance is less than 0.5")
     
     if right_distance<0.5:
-        pass
         #turn_left()
-        #print("Right Distance is less than 0.5")
+        print("Right Distance is less than 0.5")
     
     if left_distance<0.5:
-        pass
         #turn_right()
-        #print("Left Distance is less than 0.5")
+        print("Left Distance is less than 0.5")
     
     if down_distance<0.5:
-        pass
-        #print("Down Distance is less than 0.5")
+        print("Down Distance is less than 0.5")
 
     for i in range(2):
         #for sensors on the left, either

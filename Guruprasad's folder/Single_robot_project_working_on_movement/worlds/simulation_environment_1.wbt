@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999653502371748 -0.007325571714323478 0.003954026315334755 0.9268916294085008
-  position 0.030032626246788374 2.4649702495329207 1.906022871165309
+  position 1.1831778035342975 2.4344492838413543 1.953662577110951
   follow "e-puck"
 }
 TexturedBackground {
@@ -220,8 +220,8 @@ Robot {
   controller "laptop_switch_on"
 }
 E-puck {
-  translation 0.5 0 0.5
-  controller "using_gps"
+  translation 1.5 0 0.5
+  controller "delay_at_midpoints"
   turretSlot [
     GPS {
       translation 0 0.00025 0
