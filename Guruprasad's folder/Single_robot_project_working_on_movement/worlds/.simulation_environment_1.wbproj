@@ -5,7 +5,7 @@ sceneTreePerspectives: 000000ff0000000100000002000000c0000000fa01000000020100000
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 0 "controllers/using_distance_sensor/using_distance_sensor.py" "controllers/delay_at_midpoints/delay_at_midpoints.py"
+textFiles: 1 "controllers/using_distance_sensor/using_distance_sensor.py" "controllers/delay_at_midpoints/delay_at_midpoints.py"
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
 renderingDevicePerspectives: e-puck:camera;0;1;0;0

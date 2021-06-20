@@ -8,6 +8,7 @@ robot = Robot()
 #accessing and enabling required components in the robot
 camera = robot.getDevice("colour_camera")
 camera.enable(timeStep)
+camera.recognitionEnable(timeStep)
 gps = robot.getDevice("gps")
 gps.enable(timeStep)
 compass = robot.getDevice("compass")
