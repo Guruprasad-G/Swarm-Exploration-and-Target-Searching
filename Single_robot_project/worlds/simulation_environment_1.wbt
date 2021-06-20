@@ -6,8 +6,13 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
+<<<<<<< Updated upstream
   orientation -0.9999653502371748 -0.007325571714323478 0.003954026315334755 0.9268916294085008
   position 0.030032626246788374 2.4649702495329207 1.906022871165309
+=======
+  orientation -0.9988375030101142 0.03196600016451937 0.03608070694986431 1.5078115168562432
+  position 0.05489333809978364 4.7496324018657825 -0.20125379999898352
+>>>>>>> Stashed changes
   follow "e-puck"
 }
 TexturedBackground {
@@ -279,15 +284,6 @@ E-puck {
     Compass {
       rotation 0 1 0 3.14159
     }
-  ]
-}
-Robot {
-  translation 3.39928 0 3.3687
-  name "robot(1)"
-  physics Physics {
-  }
-  recognitionColors [
-    1 0 0
   ]
 }
 DEF mybot Robot {

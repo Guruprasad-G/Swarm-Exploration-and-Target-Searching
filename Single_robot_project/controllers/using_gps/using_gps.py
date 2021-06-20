@@ -1,4 +1,6 @@
 from controller import Robot
+import math
+import struct
 
 timeStep = 32
 max_velocity = 6.28
@@ -7,6 +9,7 @@ robot = Robot()
 
 camera = robot.getDevice("colour_camera")
 camera.enable(timeStep)
+camera.recognitionEnable(timeStep)
 
 gps = robot.getDevice("gps")
 gps.enable(timeStep)
@@ -54,6 +57,70 @@ speeds = [max_velocity,max_velocity]
 wheel_left.setPosition(float("inf"))
 wheel_right.setPosition(float("inf"))
 
+#def getObjectDistance(position):
+    #return math.sqrt((position[0] ** 2) + (position[2] ** 2))
+
+#def getVisibleVictims():
+    #get all objects that camera can see
+    #objects= camera.getRecognitionObjects()
+
+    #victims=[]
+
+    #for item in objects:
+        #if item.get_colors()== [1,0,0]:
+            #victim_pos= item.get_position()
+            #victims.append(victim_pos)
+    #return victims
+#def turnToVictim(victim):
+    # [x,y]
+    #position_on_image = victim[1]
+
+    #width = camera.getWidth()
+    #center = width / 2
+
+    #victim_x_position = position_on_image[0]
+    #dx = center - victim_x_position
+
+    #if dx < 0:
+        #turn_right()
+    #else:
+        #turn_left()
+#def getClosestVictim(victims):
+    #shortestDistance = 999
+    #closestVictim = []
+
+    #for victim in victims:
+        #dist = getObjectDistance(victim[0])
+        #if dist < shortestDistance:
+            #shortestDistance = dist
+            #closestVictim = victim
+
+    #return closestVictim
+#def stopAtVictim():
+    #global messageSent
+    #get all the victims the camera can see
+    #victims = getVisibleVictims()
+
+    #foundVictim = False
+
+    #if len(victims) != 0:
+        #closest_victim = getClosestVictim(victims)
+        #turnToVictim(closest_victim)
+
+    #if we are near a victim, stop and send a message to the supervisor
+    #for victim in victims:
+        #if nearObject(victim[0]):
+            #stop()
+            
+            #foundVictim = True
+
+        #if not foundVictim:
+            #messageSent = False
+def stop():
+    #set left wheel speed
+    speeds[0] = 0
+    #set right wheel speed
+    speeds[1] = 0
 def turn_right():
     #set left wheel speed
     speeds[0] = 0.6 * max_velocity
@@ -149,6 +216,7 @@ while robot.step(timeStep) != -1:
     #for both front sensors
     if frontSensors[0].getValue() > 80 and frontSensors[1].getValue() > 80:
         spin()
+    #stopAtVictim()
 
     wheel_left.setVelocity(speeds[0])
     wheel_right.setVelocity(speeds[1])
