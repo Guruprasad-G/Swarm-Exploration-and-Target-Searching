@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999653502371748 -0.007325571714323478 0.003954026315334755 0.9268916294085008
-  position 1.1831778035342975 2.4344492838413543 1.953662577110951
+  position 1.9726737331236734 2.4617928064874675 2.2921759246593423
   follow "e-puck"
 }
 TexturedBackground {
@@ -219,9 +219,72 @@ Robot {
   ]
   controller "laptop_switch_on"
 }
-E-puck {
+DEF mypuck E-puck {
   translation 1.5 0 0.5
-  controller "delay_at_midpoints"
+  controller "reciver_test1"
+  turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
+    }
+  ]
+}
+DEF mypuck E-puck {
+  translation 2.5 0 0.5
+  name "e-puck(1)"
+  controller "emitter_test"
   turretSlot [
     GPS {
       translation 0 0.00025 0

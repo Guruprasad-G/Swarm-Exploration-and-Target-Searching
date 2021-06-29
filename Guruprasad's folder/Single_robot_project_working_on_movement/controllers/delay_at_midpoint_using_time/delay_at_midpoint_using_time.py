@@ -1,4 +1,4 @@
-"""delay_at_midpoints controller."""
+"""delay_at_midpoint_using_time controller."""
 from controller import Robot
 #declaring timestep and maximum velocity.
 timeStep = 32
@@ -81,13 +81,11 @@ def move(name):
         turn_left()
     else:
         pass
-time_counter = 0
+lst = [5536,6.28*32*2,6.28*32*3,6.28*32*4]
+time_counter=0
 flag = 0
 starting_time = 0
-delay_done = False
-
 while robot.step(timeStep) != -1:
-    delay_done = False
     time_counter += timeStep
     X_pos = round(gps.getValues()[1],1)
     Z_pos = round(gps.getValues()[2],1) 
@@ -108,24 +106,12 @@ while robot.step(timeStep) != -1:
         else:
             move(name)
             break
-    if (X_pos%0.5==0 and Z_pos%0.5==0) and (flag==0) and not delay_done:
-        print("Robot is in midpoint of a Square")
-        print("Robot at","X value =",X_pos,"Z value =",Z_pos)
+    if time_counter in lst and flag==0:
         starting_time = time_counter
-        print("Starting time =",starting_time)
-        flag = 1
-        
-        
-    if flag==1:
-        if time_counter<=starting_time+1000:
-            print("creating delay")
-            delay()
-            delay_done = True
-            
-    if time_counter>=starting_time+1000 and starting_time!=0:
-        print("exiting delay")
-        flag = 0
-        starting_time = 0
+        flag=1
+    if flag==1 or time_counter<=starting_time+1000:
+        delay()
+        flag=0
     #print("X divide =",X_pos%0.5==0,"Z divide =",Z_pos%0.5==0)
     #print("Flag =",flag,"Starting time =",starting_time)
     #if Z_pos==0.0:

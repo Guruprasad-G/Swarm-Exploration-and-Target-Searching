@@ -1,5 +1,7 @@
-"""delay_at_midpoints controller."""
+"""reciver_test1 controller."""
+
 from controller import Robot
+import struct
 #declaring timestep and maximum velocity.
 timeStep = 32
 max_velocity = 6.28
@@ -13,6 +15,8 @@ gps = robot.getDevice("gps")
 gps.enable(timeStep)
 compass = robot.getDevice("compass")
 compass.enable(timeStep)
+receiver = robot.getDevice("receiver")
+receiver.enable(timeStep)
 up_sensor = robot.getDevice("up_sensor")
 up_sensor.enable(timeStep)
 right_sensor = robot.getDevice("right_sensor")
@@ -81,13 +85,13 @@ def move(name):
         turn_left()
     else:
         pass
+lst = [5120,6.28*32*2,6.28*32*3,6.28*32*4]
 time_counter = 0
-flag = 0
 starting_time = 0
-delay_done = False
-
+counter_dict = {}
+counter_dict = {0.5:0,0.4:0,0.3:0,0.2:0,0.1:0,0.0:0,-0.1:0,-0.2:0,-0.3:0,-0.4:0,-0.5:0,-0.6:0,-0.7:0,-0.8:0,-0.9:0,-1:0,
+                -1.1:0,-1.2:0,-1.3:0,-1.4:0,-1.5:0,-1.6:0,-1.7:0,-1.8:0,-1.9:0,-2.0:0,-2.1:0,-2.2:0,-2.3:0,-2.4:0,-2.5:0}
 while robot.step(timeStep) != -1:
-    delay_done = False
     time_counter += timeStep
     X_pos = round(gps.getValues()[1],1)
     Z_pos = round(gps.getValues()[2],1) 
@@ -100,41 +104,33 @@ while robot.step(timeStep) != -1:
     left_distance = left_sensor.getValue()
     down_distance = down_sensor.getValue()
     priority_list = [["up",up_distance],["right",right_distance],["left",left_distance],["down",down_distance]]
-    print("X =",X_pos,"Z =",Z_pos)
-    #print("distances","up:",up_distance,"right",right_distance,"left",left_distance,"down",down_distance)
-    for name,value in priority_list:
-        if value<0.5:
-            pass
-        else:
-            move(name)
-            break
-    if (X_pos%0.5==0 and Z_pos%0.5==0) and (flag==0) and not delay_done:
-        print("Robot is in midpoint of a Square")
-        print("Robot at","X value =",X_pos,"Z value =",Z_pos)
+    #print("X =",X_pos,"Z =",Z_pos)
+    if receiver.getQueueLength()>0:
+        message=receiver.getData()
+        #print(message)
+        dataList=struct.unpack("i",message)
+        print("Message =",dataList)
+        if 1 in dataList:
+            print("Second robot has detected wall on it's right side -- by First robot")
+    if time_counter in lst:
         starting_time = time_counter
-        print("Starting time =",starting_time)
-        flag = 1
         
+    if time_counter<=starting_time+1000:
+        pass
+        #delay()
         
-    if flag==1:
-        if time_counter<=starting_time+1000:
-            print("creating delay")
-            delay()
-            delay_done = True
-            
-    if time_counter>=starting_time+1000 and starting_time!=0:
-        print("exiting delay")
-        flag = 0
-        starting_time = 0
-    #print("X divide =",X_pos%0.5==0,"Z divide =",Z_pos%0.5==0)
-    #print("Flag =",flag,"Starting time =",starting_time)
-    #if Z_pos==0.0:
-    #    print("******************")
-    #    print("Time =",time_counter)
-        #print("******************")
     
-    #if time_counter>=4512 and time_counter<=7512:
-    #    delay()     
+    if Z_pos in counter_dict:
+        counter_dict[Z_pos]+=1
+    
+    for key,value in counter_dict.items():
+        if value!=25:
+            pass
+            #print(key)
+    #print("*******")
+    #print(counter_dict)
+    #print(X_pos,Z_pos) 
+        
     
     if up_distance<0.5:
         pass

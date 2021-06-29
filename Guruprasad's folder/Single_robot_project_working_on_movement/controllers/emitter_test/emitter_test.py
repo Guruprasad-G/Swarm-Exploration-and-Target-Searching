@@ -1,5 +1,7 @@
-"""delay_at_midpoints controller."""
+"""emitter_test controller."""
+
 from controller import Robot
+import struct
 #declaring timestep and maximum velocity.
 timeStep = 32
 max_velocity = 6.28
@@ -13,6 +15,7 @@ gps = robot.getDevice("gps")
 gps.enable(timeStep)
 compass = robot.getDevice("compass")
 compass.enable(timeStep)
+emitter = robot.getDevice("emitter")
 up_sensor = robot.getDevice("up_sensor")
 up_sensor.enable(timeStep)
 right_sensor = robot.getDevice("right_sensor")
@@ -81,17 +84,35 @@ def move(name):
         turn_left()
     else:
         pass
+def obstacle_finder(inp):
+    if inp>0.5:
+        return "clear path"
+    else:
+        return "wall"
+lst = [5120,6.28*32*2,6.28*32*3,6.28*32*4]
 time_counter = 0
-flag = 0
 starting_time = 0
-delay_done = False
-
+counter_dict = {}
+counter_dict = {0.5:0,0.4:0,0.3:0,0.2:0,0.1:0,0.0:0,-0.1:0,-0.2:0,-0.3:0,-0.4:0,-0.5:0,-0.6:0,-0.7:0,-0.8:0,-0.9:0,-1:0,
+                -1.1:0,-1.2:0,-1.3:0,-1.4:0,-1.5:0,-1.6:0,-1.7:0,-1.8:0,-1.9:0,-2.0:0,-2.1:0,-2.2:0,-2.3:0,-2.4:0,-2.5:0}
+global_dict = {}
 while robot.step(timeStep) != -1:
-    delay_done = False
+    #surroundings = []
     time_counter += timeStep
     X_pos = round(gps.getValues()[1],1)
     Z_pos = round(gps.getValues()[2],1) 
-    
+    if str(Z_pos)[-1]=='5':
+        right_value = right_sensor.getValue()
+        up_value = up_sensor.getValue()
+        left_value = left_sensor.getValue()
+        down_value = down_sensor.getValue()
+        surrounding = [obstacle_finder(right_value),obstacle_finder(up_value),
+                       obstacle_finder(left_value),obstacle_finder(down_value)]
+        global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
+        print("global_dict :",global_dict)
+        if "wall" in global_dict[(X_pos,Z_pos)]:
+            message = struct.pack("i",1)
+            emitter.send(message)
     
     speeds[0] = max_velocity
     speeds[1] = max_velocity
@@ -100,41 +121,29 @@ while robot.step(timeStep) != -1:
     left_distance = left_sensor.getValue()
     down_distance = down_sensor.getValue()
     priority_list = [["up",up_distance],["right",right_distance],["left",left_distance],["down",down_distance]]
-    print("X =",X_pos,"Z =",Z_pos)
-    #print("distances","up:",up_distance,"right",right_distance,"left",left_distance,"down",down_distance)
-    for name,value in priority_list:
-        if value<0.5:
-            pass
-        else:
-            move(name)
-            break
-    if (X_pos%0.5==0 and Z_pos%0.5==0) and (flag==0) and not delay_done:
-        print("Robot is in midpoint of a Square")
-        print("Robot at","X value =",X_pos,"Z value =",Z_pos)
-        starting_time = time_counter
-        print("Starting time =",starting_time)
-        flag = 1
-        
-        
-    if flag==1:
-        if time_counter<=starting_time+1000:
-            print("creating delay")
-            delay()
-            delay_done = True
-            
-    if time_counter>=starting_time+1000 and starting_time!=0:
-        print("exiting delay")
-        flag = 0
-        starting_time = 0
-    #print("X divide =",X_pos%0.5==0,"Z divide =",Z_pos%0.5==0)
-    #print("Flag =",flag,"Starting time =",starting_time)
-    #if Z_pos==0.0:
-    #    print("******************")
-    #    print("Time =",time_counter)
-        #print("******************")
+    #print("X =",X_pos,"Z =",Z_pos)
     
-    #if time_counter>=4512 and time_counter<=7512:
-    #    delay()     
+    
+    
+    if time_counter in lst:
+        starting_time = time_counter
+        
+    if time_counter<=starting_time+1000:
+        pass
+        #delay()
+        
+    
+    if Z_pos in counter_dict:
+        counter_dict[Z_pos]+=1
+    
+    for key,value in counter_dict.items():
+        if value!=25:
+            pass
+            #print(key)
+    #print("*******")
+    #print(counter_dict)
+    #print(X_pos,Z_pos) 
+        
     
     if up_distance<0.5:
         pass
