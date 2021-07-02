@@ -5,7 +5,7 @@ sceneTreePerspectives: 000000ff0000000100000002000000c0000000fc01000000060100000
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 0 "controllers/using_distance_sensor/using_distance_sensor.py" "controllers/using_gps/using_gps_1"
+textFiles: 0 "controllers/using_distance_sensor/using_distance_sensor.py"
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
 renderingDevicePerspectives: e-puck:camera;0;1;0;0

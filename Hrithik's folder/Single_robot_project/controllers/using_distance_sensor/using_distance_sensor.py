@@ -134,6 +134,7 @@ while robot.step(timeStep) != -1:
             victim_pos= item.get_position()
             victim_model= item.get_model()
             print(victim_pos,victim_model)
+            print("target found")
             
            
             
