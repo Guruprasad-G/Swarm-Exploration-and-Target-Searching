@@ -48,7 +48,11 @@ speeds = [max_velocity,max_velocity]
 
 wheel_left.setPosition(float("inf"))
 wheel_right.setPosition(float("inf"))
-
+def stop():
+    #set left wheel speed
+    speeds[0] = 0* max_velocity
+    #set right wheel speed
+    speeds[1] = 0* max_velocity
 def turn_right():
     #set left wheel speed
     speeds[0] = 0.6 * max_velocity
@@ -135,6 +139,8 @@ while robot.step(timeStep) != -1:
             victim_model= item.get_model()
             print(victim_pos,victim_model)
             print("target found")
+            if victim_pos[0]>0.032:
+               stop()
             
            
             
