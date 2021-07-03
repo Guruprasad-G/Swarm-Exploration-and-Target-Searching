@@ -49,23 +49,31 @@ leftSensors[1].enable(timeStep)
 
 #[left wheel speed, right wheel speed]
 speeds = [max_velocity,max_velocity]
+current_dir = []
+next_dir = []
 
 wheel_left.setPosition(float("inf"))
 wheel_right.setPosition(float("inf"))
 
 def turn_right():
+    global current_dir
+    global next_dir
     #set left wheel speed
     speeds[0] = 0.6 * max_velocity
     #set right wheel speed
     speeds[1] = -0.2 * max_velocity
 
 def turn_left():
+    global current_dir
+    global next_dir
     #set left wheel speed
     speeds[0] = -0.2 * max_velocity
     #set right wheel speed
     speeds[1] = 0.6 * max_velocity
 
 def spin():
+    global current_dir
+    global next_dir
     #set left wheel speed
     speeds[0] = 0.6 * max_velocity
     #set right wheel speed
@@ -112,6 +120,8 @@ while robot.step(timeStep) != -1:
         print("Message =",dataList)
         if 1 in dataList:
             print("Second robot has detected wall on it's right side -- by First robot")
+    compass_val = [round(compass.getValues()[0],2),round(compass.getValues()[1],2),round(compass.getValues()[2],2)]
+    print(compass_val)
     if time_counter in lst:
         starting_time = time_counter
         

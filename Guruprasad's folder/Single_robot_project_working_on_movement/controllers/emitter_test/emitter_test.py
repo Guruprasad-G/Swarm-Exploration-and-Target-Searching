@@ -123,6 +123,26 @@ while robot.step(timeStep) != -1:
     priority_list = [["up",up_distance],["right",right_distance],["left",left_distance],["down",down_distance]]
     #print("X =",X_pos,"Z =",Z_pos)
     
+    object= camera.getRecognitionObjects()
+    #print(obj)
+    lst=[]
+    target={}
+    for item in object:
+        target_pos = []
+        if item.get_colors()== [1,0,0]:
+            victim_pos= item.get_position()
+            victim_model= item.get_model()
+            target_pos.append(victim_pos[0]+gps.getValues[0])
+            target_pos.append(victim_pos[1]+gps.getValues[1])
+            target_pos.append(victim_pos[2]+gps.getValues[2])
+            #print("Target_pos =",target_pos)
+            #print("Relative_pos =",victim_pos)
+            #print("GPS pos=",gps.getValues())
+            print("Target {} found at a relative distance of X={},Y={},Z={}".format(victim_model,target_pos[0],target_pos[1],target_pos[2]))
+            #print(victim_pos,victim_model)
+            #print("target found")
+            if victim_pos[0]>0.032 or victim_pos[2]>0.032:
+               delay()
     
     
     if time_counter in lst:
