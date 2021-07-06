@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999653502371748 -0.007325571714323478 0.003954026315334755 0.9268916294085008
-  position 1.879650142959167 3.3511292270088475 2.391024655754689
+  position 1.5904390556383152 3.3093242553061035 2.4431307091489654
   follow "e-puck"
 }
 TexturedBackground {
@@ -21,7 +21,7 @@ RectangleArena {
   wallHeight 0.5
 }
 Robot {
-  translation -0.483507 2.70894e-14 -0.467985
+  translation -0.483507 2.70894e-14 -0.647985
   rotation 0 1 0 3.14159
   children [
     HingeJoint {
@@ -221,6 +221,7 @@ Robot {
 }
 DEF mypuck E-puck {
   translation 1.5 0 0.5
+  rotation 1 0 0 0
   controller "making_turns"
   turretSlot [
     GPS {
@@ -282,7 +283,7 @@ DEF mypuck E-puck {
   ]
 }
 DEF mypuck E-puck {
-  translation 2.5 0 0.5
+  translation 2.5 0 -1.54
   name "e-puck(1)"
   controller "void"
   turretSlot [
