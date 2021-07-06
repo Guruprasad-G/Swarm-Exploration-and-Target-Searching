@@ -72,6 +72,27 @@ counter_dict = {0.5:0,0.4:0,0.3:0,0.2:0,0.1:0,0.0:0,-0.1:0,-0.2:0,-0.3:0,-0.4:0,
                 -1.1:0,-1.2:0,-1.3:0,-1.4:0,-1.5:0,-1.6:0,-1.7:0,-1.8:0,-1.9:0,-2.0:0,-2.1:0,-2.2:0,-2.3:0,-2.4:0,-2.5:0}
 
 #Functions
+def robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value):
+    global right
+    global up
+    global left
+    global down
+    if tuple(compass_val) == up:
+        surrounding = [obstacle_finder(right_value),obstacle_finder(up_value),
+                       obstacle_finder(left_value),obstacle_finder(down_value)]
+    elif tuple(compass_val) == right:
+        surrounding = [obstacle_finder(up_value),obstacle_finder(left_value),
+                       obstacle_finder(down_value),obstacle_finder(right_value)]
+    elif tuple(compass_val) == left:
+        surrounding = [obstacle_finder(down_value),obstacle_finder(right_value),
+                       obstacle_finder(up_value),obstacle_finder(left_value)]
+    elif tuple(compass_val) == down:
+        surrounding = [obstacle_finder(left_value),obstacle_finder(down_value),
+                       obstacle_finder(right_value),obstacle_finder(up_value)]
+    else :
+        print("Compass Value Error : Invalid Compass value inside robot_orientation function")
+    return surrounding
+
 def obstacle_finder(inp):
     if inp>=0.5:
         return "clear path"
@@ -193,7 +214,7 @@ while robot.step(timeStep) != -1:
     time_counter += timeStep
     
     #To get approximate GPS position of the robot
-    X_pos = round(gps.getValues()[1],1)
+    X_pos = round(gps.getValues()[0],1)
     Z_pos = round(gps.getValues()[2],1) 
     print("X =",X_pos,"Z =",Z_pos)
     
@@ -202,27 +223,28 @@ while robot.step(timeStep) != -1:
     speeds[1] = max_velocity
     
     #The folowing gets executed when the robot is at the approximate center of the square
-    if str(Z_pos)[-1]=='5' or str(X_pos)[-1]=='5':
+    if str(Z_pos)[-1]=='5' and str(X_pos)[-1]=='5':
         #To get the sensor values
         right_value = right_sensor.getValue()
         up_value = up_sensor.getValue()
         left_value = left_sensor.getValue()
         down_value = down_sensor.getValue()
         
-        #Temporary list that stores surrounding details 
-        surrounding = [obstacle_finder(right_value),obstacle_finder(up_value),
-                       obstacle_finder(left_value),obstacle_finder(down_value)]
-        #Updating Global data
-        global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
-        print("global_dict :",global_dict)
-        
-        #To get compass value to check robot orientation
+        #Get compass value to check robot orientatio
         compass_val = [round(compass.getValues()[0],1),round(compass.getValues()[1],1),round(compass.getValues()[2],1)]
         print("Compass Value :",compass_val)
-        #Updates current direction value only when compass value is in right,up,left or down
+        
+        #Updates current direction and global dict value only when compass value is in right,up,left or down
         if tuple(compass_val) in [right,up,left,down]:
+            surrounding = []
+            #Call robot_orientation function that returns a list of robot surrounding data in the order [R,U,L,D]
+            surrounding = robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value)
+            #Updating Global data
+            global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
+            print("Global dict :",global_dict)
             print("Current dir set to",compass_val)
             current_dir = compass_val
+          
         #Calls movement decision which returns how to move about 
         move(movement_decision(X_pos,Z_pos))
      

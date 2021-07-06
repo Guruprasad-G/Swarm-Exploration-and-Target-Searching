@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999653502371748 -0.007325571714323478 0.003954026315334755 0.9268916294085008
-  position 1.5904390556383152 3.3093242553061035 2.4431307091489654
+  position 2.1916380027156994 3.1780654667420443 2.4706323694325736
   follow "e-puck"
 }
 TexturedBackground {
@@ -219,7 +219,7 @@ Robot {
   ]
   controller "laptop_switch_on"
 }
-DEF mypuck E-puck {
+DEF mypuck1 E-puck {
   translation 1.5 0 0.5
   rotation 1 0 0 0
   controller "making_turns"
@@ -282,8 +282,8 @@ DEF mypuck E-puck {
     }
   ]
 }
-DEF mypuck E-puck {
-  translation 2.5 0 -1.54
+DEF mypuck2 E-puck {
+  translation 3.53925 0 -0.500656
   name "e-puck(1)"
   controller "void"
   turretSlot [
