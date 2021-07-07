@@ -1,4 +1,4 @@
-"""making_turns controller."""
+"""comms controller."""
 
 from controller import Robot
 import struct
@@ -17,7 +17,6 @@ compass = robot.getDevice("compass")
 compass.enable(timeStep)
 receiver = robot.getDevice("receiver")
 receiver.enable(timeStep)
-emitter = robot.getDevice("emitter")
 up_sensor = robot.getDevice("up_sensor")
 up_sensor.enable(timeStep)
 right_sensor = robot.getDevice("right_sensor")
