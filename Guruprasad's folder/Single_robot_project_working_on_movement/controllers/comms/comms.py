@@ -1,5 +1,4 @@
 """comms controller."""
-
 from controller import Robot
 import struct
 #declaring timestep and maximum velocity.
@@ -15,6 +14,7 @@ gps = robot.getDevice("gps")
 gps.enable(timeStep)
 compass = robot.getDevice("compass")
 compass.enable(timeStep)
+emitter = robot.getDevice("emitter")
 receiver = robot.getDevice("receiver")
 receiver.enable(timeStep)
 up_sensor = robot.getDevice("up_sensor")
@@ -94,10 +94,11 @@ def robot_orientation(compass_val,surrounding,right_value,up_value,left_value,do
     return surrounding
 
 def obstacle_finder(inp):
+    ''' Returns True if it is a Clear-path and False if there is a Wall '''
     if inp>=0.5:
-        return "clear path"
+        return True
     else:
-        return "wall"
+        return False
 
 def movement_decision(X_pos,Z_pos):
     global global_dict
@@ -107,12 +108,12 @@ def movement_decision(X_pos,Z_pos):
     global left
     global down
     if tuple(current_dir) == right:
-        if global_dict[(X_pos,Z_pos)][0] == "wall":
-            if global_dict[(X_pos,Z_pos)][3] == "clear path":
+        if global_dict[(X_pos,Z_pos)][0] == False:
+            if global_dict[(X_pos,Z_pos)][3] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][1] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][1] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][2] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][2] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -120,12 +121,12 @@ def movement_decision(X_pos,Z_pos):
         else:
             return "forward"
     elif tuple(current_dir) == up:
-        if global_dict[(X_pos,Z_pos)][1] == "wall":
-            if global_dict[(X_pos,Z_pos)][0] == "clear path":
+        if global_dict[(X_pos,Z_pos)][1] == False:
+            if global_dict[(X_pos,Z_pos)][0] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][2] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][2] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][3] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][3] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -133,12 +134,12 @@ def movement_decision(X_pos,Z_pos):
         else:
             return "forward"    
     elif tuple(current_dir) == left:
-        if global_dict[(X_pos,Z_pos)][2] == "wall":
-            if global_dict[(X_pos,Z_pos)][1] == "clear path":
+        if global_dict[(X_pos,Z_pos)][2] == False:
+            if global_dict[(X_pos,Z_pos)][1] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][3] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][3] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][0] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][0] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -146,12 +147,12 @@ def movement_decision(X_pos,Z_pos):
         else:
             return "forward"
     elif tuple(current_dir) == down:
-        if global_dict[(X_pos,Z_pos)][3] == "wall":
-            if global_dict[(X_pos,Z_pos)][2] == "clear path":
+        if global_dict[(X_pos,Z_pos)][3] == False:
+            if global_dict[(X_pos,Z_pos)][2] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][0] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][0] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][1] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][1] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -180,7 +181,7 @@ def turn_right():
     global right_next_dir
     #print("Current",current_dir,"Check",tuple(current_dir))
     if(current_dir!=right_next_dir[tuple(current_dir)]):
-        print("Current dir =",current_dir,"End dir =",right_next_dir[tuple(current_dir)])
+        #print("Current dir =",current_dir,"End dir =",right_next_dir[tuple(current_dir)])
         #set left wheel speed
         speeds[0] = 0.6 * max_velocity
         #set right wheel speed
@@ -241,21 +242,23 @@ while robot.step(timeStep) != -1:
             surrounding = robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value)
             #Updating Global data
             global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
+            message = struct.pack("? f f ? ? ? ?",True,X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
+            emitter.send(message)
             print("Global dict :",global_dict)
-            print("Current dir set to",compass_val)
+            #print("Current dir set to",compass_val)
             current_dir = compass_val
           
         #Calls movement decision which returns how to move about 
         move(movement_decision(X_pos,Z_pos))
-     
+    
     #Receives message only when Message Queue is greater than 0
     if receiver.getQueueLength()>0:
         #Webots way of reciveing message
-        message=receiver.getData()
+        received_data = receiver.getData()
         #Message needs to be unpacked to recover orginal message
-        dataList=struct.unpack("i",message)
-        print("Message =",dataList)
-        if 1 in dataList:
+        message = struct.unpack("i",received_data)
+        print("Message =",message)
+        if 1 in message:
             print("Second robot has detected wall on it's right side -- by First robot")
     
     #Initializing CameraRecognitionObject
@@ -311,5 +314,5 @@ while robot.step(timeStep) != -1:
     if frontSensors[0].getValue() > 80 and frontSensors[1].getValue() > 80:
         spin()
 
-    wheel_left.setVelocity(speeds[0])
-    wheel_right.setVelocity(speeds[1])
+    wheel_left.setVelocity(0)
+    wheel_right.setVelocity(0)

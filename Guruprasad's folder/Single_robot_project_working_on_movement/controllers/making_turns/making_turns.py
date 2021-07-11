@@ -15,6 +15,7 @@ gps = robot.getDevice("gps")
 gps.enable(timeStep)
 compass = robot.getDevice("compass")
 compass.enable(timeStep)
+emitter = robot.getDevice("emitter")
 receiver = robot.getDevice("receiver")
 receiver.enable(timeStep)
 emitter = robot.getDevice("emitter")
@@ -61,6 +62,7 @@ right = (0.0, -0.0, 1.0)
 up = (-0.0, 1.0, -0.0)
 left = (0.0, -0.0, -1.0)
 down = (0.0, -1.0, -0.0)
+
 direction_dict = {"right":right,"up":up,"left":left,"down":down}
 left_next_dir =   {right:list(up), up:list(left), left:list(down), down:list(right)}
 right_next_dir =  {right:list(down), down:list(left), left:list(up), up:list(right)}
@@ -95,10 +97,11 @@ def robot_orientation(compass_val,surrounding,right_value,up_value,left_value,do
     return surrounding
 
 def obstacle_finder(inp):
+    ''' Returns True if it is a Clear-path and False if there is a Wall '''
     if inp>=0.5:
-        return "clear path"
+        return True
     else:
-        return "wall"
+        return False
 
 def movement_decision(X_pos,Z_pos):
     global global_dict
@@ -108,12 +111,12 @@ def movement_decision(X_pos,Z_pos):
     global left
     global down
     if tuple(current_dir) == right:
-        if global_dict[(X_pos,Z_pos)][0] == "wall":
-            if global_dict[(X_pos,Z_pos)][3] == "clear path":
+        if global_dict[(X_pos,Z_pos)][0] == False:
+            if global_dict[(X_pos,Z_pos)][3] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][1] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][1] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][2] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][2] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -121,12 +124,12 @@ def movement_decision(X_pos,Z_pos):
         else:
             return "forward"
     elif tuple(current_dir) == up:
-        if global_dict[(X_pos,Z_pos)][1] == "wall":
-            if global_dict[(X_pos,Z_pos)][0] == "clear path":
+        if global_dict[(X_pos,Z_pos)][1] == False:
+            if global_dict[(X_pos,Z_pos)][0] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][2] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][2] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][3] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][3] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -134,12 +137,12 @@ def movement_decision(X_pos,Z_pos):
         else:
             return "forward"    
     elif tuple(current_dir) == left:
-        if global_dict[(X_pos,Z_pos)][2] == "wall":
-            if global_dict[(X_pos,Z_pos)][1] == "clear path":
+        if global_dict[(X_pos,Z_pos)][2] == False:
+            if global_dict[(X_pos,Z_pos)][1] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][3] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][3] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][0] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][0] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -147,12 +150,12 @@ def movement_decision(X_pos,Z_pos):
         else:
             return "forward"
     elif tuple(current_dir) == down:
-        if global_dict[(X_pos,Z_pos)][3] == "wall":
-            if global_dict[(X_pos,Z_pos)][2] == "clear path":
+        if global_dict[(X_pos,Z_pos)][3] == False:
+            if global_dict[(X_pos,Z_pos)][2] == True:
                 return "turn_right"
-            elif global_dict[(X_pos,Z_pos)][0] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][0] == True:
                 return "turn_left"
-            elif global_dict[(X_pos,Z_pos)][1] == "clear path":
+            elif global_dict[(X_pos,Z_pos)][1] == True:
                 return "turn_back"
             else:
                 print("Hey I am Surrounded on all the sides man!!")
@@ -242,21 +245,23 @@ while robot.step(timeStep) != -1:
             surrounding = robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value)
             #Updating Global data
             global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
+            data = struct.pack("? f f ? ? ? ?",True,X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
+            emitter.send(data)
             print("Global dict :",global_dict)
             print("Current dir set to",compass_val)
             current_dir = compass_val
           
         #Calls movement decision which returns how to move about 
         move(movement_decision(X_pos,Z_pos))
-     
+    
     #Receives message only when Message Queue is greater than 0
     if receiver.getQueueLength()>0:
         #Webots way of reciveing message
-        message=receiver.getData()
+        received_data = receiver.getData()
         #Message needs to be unpacked to recover orginal message
-        dataList=struct.unpack("i",message)
-        print("Message =",dataList)
-        if 1 in dataList:
+        message = struct.unpack("i",received_data)
+        print("Message =",message)
+        if 1 in message:
             print("Second robot has detected wall on it's right side -- by First robot")
     
     #Initializing CameraRecognitionObject
