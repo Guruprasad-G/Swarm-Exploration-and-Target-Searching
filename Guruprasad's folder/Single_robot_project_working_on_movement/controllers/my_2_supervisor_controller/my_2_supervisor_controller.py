@@ -53,21 +53,28 @@ def addEdge(graph,u,v):
 # definition of function
 def generate_edges(graph):
     edges = []
-  
     # for each node in graph
-    for node in graph:
-          
+    for node in graph:         
         # for each neighbour node of a single node
-        for neighbour in graph[node]:
-              
+        for neighbour in graph[node]:              
             # if edge exists then append
             edges.append((node, neighbour))
     return edges
-  
+    
+def find_shortest_path(graph, start, end, path =[]):
+        path = path + [start]
+        if start == end:
+            return path
+        shortest = None
+        for node in graph[start]:
+            if node not in path:
+                newpath = find_shortest_path(graph, node, end, path)
+                if newpath:
+                    if not shortest or len(newpath) < len(shortest):
+                        shortest = newpath
+        return shortest  
 # declaration of graph as dictionary
-#addEdge(graph,'a','c')
-
-  
+#addEdge(graph,'a','c') 
 # Driver Function call 
 # to print generated graph
 #print(generate_edges(graph))
@@ -194,11 +201,11 @@ for index,time in enumerate(timings):
         graph_updation(position_to_node[(message[1],0,message[2])],message[3],message[4],message[5],message[6])
         message_to_map_converion(message[1],message[2],message[3],message[4],message[5],message[6])
         print("Message =",message)
-        print("Map data =",global_map_dict)
+        #print("Map data =",global_map_dict)
         receiver1.nextPacket()
         print("Queue lenght",receiver1.getQueueLength())
             
-    #print("Graph",generate_edges(graph))
+    print("Graph",generate_edges(graph))
         
     trans_field.setSFVec3f(list(positions[index]))
     print("Current node Robot is in =",position_to_node[positions[index]])
