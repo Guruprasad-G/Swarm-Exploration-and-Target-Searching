@@ -113,48 +113,18 @@ def which_side(current_node,next_node):
         print("Going down")
 
 def next_direction(current_node,next_node):
-    global current_dir
-    global next_dir
     global right
     global up
     global left
     global down
-    if current_dir == right:
-        if current_node+1 == next_node:
-            return right
-        elif current_node-8 == next_node:
-            return up
-        elif current_node-1 == next_node:
-            return left
-        elif current_node+8 == next_node:
-            return down
-    elif current_dir == up:
-        if current_node+1 == next_node:
-            return right
-        elif current_node-8 == next_node:
-            return up
-        elif current_node-1 == next_node:
-            return left
-        elif current_node+8 == next_node:
-            return down
-    elif current_dir == up:
-        if current_node+1 == next_node:
-            return right
-        elif current_node-8 == next_node:
-            return up
-        elif current_node-1 == next_node:
-            return left
-        elif current_node+8 == next_node:
-            return down
-    elif current_dir == up:
-        if current_node+1 == next_node:
-            return right
-        elif current_node-8 == next_node:
-            return up
-        elif current_node-1 == next_node:
-            return left
-        elif current_node+8 == next_node:
-            return down
+    if current_node+1 == next_node:
+        return right
+    elif current_node-8 == next_node:
+        return up
+    elif current_node-1 == next_node:
+        return left
+    elif current_node+8 == next_node:
+        return down
     else:
         print("Invalid/Inbetween oriented value")
 
@@ -212,9 +182,10 @@ for index,time in enumerate(timings):
         
     (x,y,z,angle) = rot_field.getSFRotation()
     #print("Current orientation =",round(x),round(y),round(z),round(angle,4))
-    #rot_field.setSFRotation(next_dir)
+    print("Current node =",node_path[index],"Next node =",node_path[index+1])
+    rot_field.setSFRotation(list(next_direction(node_path[index],node_path[index+1])))
     robot_node.resetPhysics()
-    
+    #
     
     
     #if receiver2.getQueueLength()>0:
