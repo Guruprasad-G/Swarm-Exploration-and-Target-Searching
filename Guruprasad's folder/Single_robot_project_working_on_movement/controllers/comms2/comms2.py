@@ -33,7 +33,7 @@ right = (0.0, -0.0, 1.0)
 up = (-0.0, 1.0, -0.0)
 left = (0.0, -0.0, -1.0)
 down = (0.0, -1.0, -0.0)
-
+done = False
 global_dict = {}
 
 def robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value):
@@ -66,7 +66,7 @@ def obstacle_finder(inp):
         return False
 
 while robot.step(timeStep) != -1:
-    timings = range(0,180,2)
+    timings = range(2,180,2)
     for index,time in enumerate(timings):
         while robot.getTime() < time:
             if robot.step(timeStep) == -1:
@@ -88,13 +88,14 @@ while robot.step(timeStep) != -1:
                 #x_pos_of_target = gps.getValues()[0]+victim_pos[0]
                 #y_pos_of_target = gps.getValues()[1]+victim_pos[1]
                 #z_pos_of_target = gps.getValues()[2]+victim_pos[2]
-                if (target_pos[0]>=-0.25 and target_pos[2]>=-0.25):
+                if target_pos[0]>=0.0085:
+                    done = True
                     print("Relative_pos =",target_pos,"Model =",target_model)
         surrounding = []
         surrounding = robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value)
         #Updating Global data
         global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
-        message = struct.pack("? f f ? ? ? ?",True,X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
+        message = struct.pack("? f f ? ? ? ?",done,X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
         print("Message =",X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
         emitter.send(message)
     #print("Global dict :",global_dict)

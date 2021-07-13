@@ -1,4 +1,4 @@
-"""my_2_supervisor_controller controller."""
+"""my_3_supervisor_controller controller."""
 
 from controller import Supervisor
 #from controller import Robot
@@ -38,6 +38,26 @@ node_path = [0, 1, 9, 8, 16, 17, 18, 19, 20, 12, 13, 14, 6, 5,
  53, 52, 60, 61, 62, 54, 55, 63, 55, 54, 62, 61, 60, 52, 53, 45,
   44, 43, 51, 50, 58, 59, 58, 50, 51, 43, 42, 41, 49, 48, 56, 57]
 
+#Stack code from YouTube
+class Stack():
+    def __init__(self):
+        self.stack = list()
+    def push(self, item):
+        self.stack.append(item)
+    def pop(self):
+        if len(self.stack) > 0:
+            return self.stack.pop()
+        else:
+            return None
+    def peek(self):
+        if len(self.stack) > 0:
+            return self.stack[len(self.stack)-1]
+        else:
+            return None
+    def __str__(self):
+        return str(self.stack)
+
+stack = Stack()
 #Graph code from GeeksForGeeks
 # Python program for 
 # validation of a graph
@@ -78,9 +98,26 @@ def find_shortest_path(graph, start, end, path =[]):
 # Driver Function call 
 # to print generated graph
 #print(generate_edges(graph))
-
+visited = [False for i in range(63)]
+path_used = []
 
 #Functions
+def next_node_generator(current_node):
+    global visited
+    global path_used
+    global graph
+    stack.push(current_node)
+    visited[current_node] = True
+    for node in graph[current_node]:
+        if (not visited[node]):
+            print("Node to be returned =",node)
+            return node
+    stack.pop()
+    print("Back path to be returned =",stack.peek())
+    return stack.pop()
+    
+
+
 def message_to_map_converion(X_pos,Z_pos,r_detail,u_detail,l_detail,d_detail):
     global global_map_dict
     surrounding = [r_detail,u_detail,l_detail,d_detail]
@@ -93,13 +130,13 @@ rotate_next_dir = {right:list(left), left:list(right), up:list(down), down:list(
 def graph_updation(current_node,r,u,l,d):
     #print("Current node",current_node)
     global graph
-    if u:
+    if u and (current_node-8 not in graph[current_node]):
         addEdge(graph,current_node,current_node-8)
-    if l:
+    if l and (current_node-1 not in graph[current_node]):
         addEdge(graph,current_node,current_node-1)
-    if r:
+    if r and (current_node+1 not in graph[current_node]):
         addEdge(graph,current_node,current_node+1)
-    if d:
+    if d and (current_node+8 not in graph[current_node]):
         addEdge(graph,current_node,current_node+8)
 
 def which_side(current_node,next_node):
@@ -155,8 +192,11 @@ positions = []
 for node in node_path:
     positions.append(node_to_position[node])
     
-timings = range(2,len(positions),2)
+timings = range(2,180,2)
 current_dir = rot_field.getSFRotation()
+
+next_node = 0
+current_node = 0
 for index,time in enumerate(timings):
         
     while supervisor.getTime() < time:
@@ -166,28 +206,28 @@ for index,time in enumerate(timings):
         received_data = receiver1.getData()
         message = struct.unpack("? f f ? ? ? ?",received_data)
             #print("Message received")
-            
-        print("Check =",position_to_node[(message[1],0,message[2])],(message[1],0,message[2]))
+        current_node = position_to_node[(message[1],0,message[2])]
+        #print("Check =",position_to_node[(message[1],0,message[2])],(message[1],0,message[2]))
         graph_updation(position_to_node[(message[1],0,message[2])],message[3],message[4],message[5],message[6])
         message_to_map_converion(message[1],message[2],message[3],message[4],message[5],message[6])
-        print("Message =",message)
+        next_node = next_node_generator(current_node)
+        #print("Message =",message)
         if message[0]:
             quit()
         #print("Map data =",global_map_dict)
         receiver1.nextPacket()
-        print("Queue lenght",receiver1.getQueueLength())
+        #print("Queue lenght",receiver1.getQueueLength())
+    if bool(graph):        
+        #print("Graph",generate_edges(graph))
+        print("Graph",graph)
+        trans_field.setSFVec3f(list(node_to_position[next_node]))
+        #print("Current node Robot is in =",next_node)
             
-    #print("Graph",generate_edges(graph))
-    print("Graph",graph)
-    print("graph[0]",graph[0])    
-    trans_field.setSFVec3f(list(positions[index]))
-    print("Current node Robot is in =",position_to_node[positions[index]])
-        
-    (x,y,z,angle) = rot_field.getSFRotation()
-    #print("Current orientation =",round(x),round(y),round(z),round(angle,4))
-    print("Current node =",node_path[index],"Next node =",node_path[index+1])
-    rot_field.setSFRotation(list(next_direction(node_path[index],node_path[index+1])))
-    robot_node.resetPhysics()
+        (x,y,z,angle) = rot_field.getSFRotation()
+        #print("Current orientation =",round(x),round(y),round(z),round(angle,4))
+        #print("Current node =",current_node,"Next node =",node_path[index+1])
+        rot_field.setSFRotation(list(next_direction(current_node,next_node)))
+        robot_node.resetPhysics()
     #
     
     
@@ -198,4 +238,3 @@ for index,time in enumerate(timings):
         #print("Message =",message)
         #print("Map data =",global_map_dict)
         #receiver2.nextPacket()
-
