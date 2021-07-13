@@ -5,7 +5,7 @@ sceneTreePerspectives: 000000ff0000000100000002000000c0000000fa01000000020100000
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 1 "controllers/my_2_supervisor_controller/my_2_supervisor_controller.py" "controllers/my_3_supervisor_controller/my_3_supervisor_controller.py" "controllers/comms2/comms2.py" "controllers/comms/comms.py"
+textFiles: 2 "controllers/my_2_supervisor_controller/my_2_supervisor_controller.py" "controllers/my_3_supervisor_controller/my_3_supervisor_controller.py" "controllers/my_4_supervisor_controller/my_4_supervisor_controller.py" "controllers/comms2/comms2.py" "controllers/comms/comms.py"
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
 consoles: Console:MAIN-SUPERVISOR:All
