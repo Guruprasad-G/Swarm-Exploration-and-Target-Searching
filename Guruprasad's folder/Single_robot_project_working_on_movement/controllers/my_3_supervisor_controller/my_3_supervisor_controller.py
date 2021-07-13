@@ -30,14 +30,6 @@ up = (0,1,0,0)
 left = (0,1,0,1.57071)
 down = (0,1,0,3.14142)
 
-node_path = [0, 1, 9, 8, 16, 17, 18, 19, 20, 12, 13, 14, 6, 5, 
-4, 3, 2, 10, 11, 10, 2, 3, 4, 5, 6, 7, 15, 23, 22, 21, 29, 28, 
-27, 26, 34, 35, 34, 26, 27, 28, 36, 37, 36, 28, 29, 21, 22, 30, 
-38, 39, 31, 39, 38, 30, 22, 23, 15, 7, 6, 14, 13, 12, 20, 19, 18,
- 17, 25, 24, 32, 33, 41, 40, 41, 42, 43, 44, 45, 46, 47, 46, 45, 
- 53, 52, 60, 61, 62, 54, 55, 63, 55, 54, 62, 61, 60, 52, 53, 45,
-  44, 43, 51, 50, 58, 59, 58, 50, 51, 43, 42, 41, 49, 48, 56, 57]
-
 #Stack code from YouTube
 class Stack():
     def __init__(self):
@@ -188,10 +180,6 @@ length_of_arena = 4
 node_to_position,position_to_node = conversion_between_node_and_position(4)
 nodes = pow(length_of_arena,3)
     
-positions = []
-for node in node_path:
-    positions.append(node_to_position[node])
-    
 timings = range(2,180,2)
 current_dir = rot_field.getSFRotation()
 
@@ -225,7 +213,6 @@ for index,time in enumerate(timings):
             
         (x,y,z,angle) = rot_field.getSFRotation()
         #print("Current orientation =",round(x),round(y),round(z),round(angle,4))
-        #print("Current node =",current_node,"Next node =",node_path[index+1])
         rot_field.setSFRotation(list(next_direction(current_node,next_node)))
         robot_node.resetPhysics()
     #

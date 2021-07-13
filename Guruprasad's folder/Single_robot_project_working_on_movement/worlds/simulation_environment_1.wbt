@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999624989823761 0.002149129456561127 0.008389390412925569 1.0068651619722249
-  position -1.8815253994229266 5.68923337675621 5.769700470240317
+  position 0.3138367339224033 11.0460855508567 7.350985863627326
   follow "E-PUCK1"
 }
 TexturedBackground {
@@ -47,7 +47,7 @@ DEF MAINSUPERVISOR Robot {
     }
   ]
   name "MAIN-SUPERVISOR"
-  controller "my_4_supervisor_controller"
+  controller "my_5_supervisor_controller"
   supervisor TRUE
 }
 DEF Laptop Robot {
@@ -67,7 +67,7 @@ DEF Laptop Robot {
         }
       ]
       endPoint Solid {
-        translation 0.01449999999999961 0.1299998154623429 0.10000047069014067
+        translation 0.014499999999999565 0.12999981546234254 0.10000047069014031
         rotation 1 0 0 4.0647133925121234e-06
         children [
           Shape {
@@ -251,7 +251,7 @@ DEF Laptop Robot {
   controller "laptop_switch_on"
 }
 DEF EPUCK1 E-puck {
-  translation -2.5 -8.53891e-05 3.5
+  translation -3.5 -8.53891e-05 -3.5
   rotation 0 -1 0 5.307156870259904e-06
   name "E-PUCK1"
   controller "comms2"
@@ -316,10 +316,141 @@ DEF EPUCK1 E-puck {
   ]
 }
 DEF EPUCK2 E-puck {
-  translation 4.33209 -6.39203e-05 -0.509865
+  translation 3.5 -6.39203e-05 3.5
   rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
   name "E-PUCK2"
-  controller "void"
+  controller "comms2"
+  emitter_channel 2
+  turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
+    }
+  ]
+}
+DEF EPUCK3 E-puck {
+  translation 3.5 -6.39203e-05 -3.5
+  rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+  name "E-PUCK2(1)"
+  controller "comms2"
+  emitter_channel 3
+  turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
+    }
+  ]
+}
+DEF EPUCK4 E-puck {
+  translation -3.5 -6.39203e-05 3.5
+  rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+  name "E-PUCK2(2)"
+  controller "comms2"
+  emitter_channel 4
   turretSlot [
     GPS {
       translation 0 0.00025 0
@@ -394,7 +525,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation 0.06 0 -0.05
-        rotation 1.8566236989315977e-09 -1.8566305187037743e-09 1 1.5708
+        rotation 2.1992151458244757e-09 -2.1992232240076107e-09 1 1.5708
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -423,7 +554,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation -0.06 0 -0.05
-        rotation 1.437587339966735e-07 -1.437592620529617e-07 0.9999999999999793 1.5708000000000204
+        rotation 1.437587339966735e-07 -1.4375926205296204e-07 0.9999999999999793 1.5708000000000204
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -451,8 +582,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation -0.0599999999999937 2.883537781883486e-08 0.04999999999999112
-        rotation -1.441763595038723e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
+        translation -0.059999999999992976 2.8835377818834705e-08 0.04999999999999058
+        rotation -1.441763595038727e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -480,7 +611,7 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation 0.06 1.4714455165432546e-08 0.05000000000000207
+        translation 0.06 1.47144551654326e-08 0.05000000000000243
         rotation -7.357200558159767e-08 7.357227582716037e-08 0.9999999999999946 1.570800000000005
         children [
           DEF Wheel Shape {

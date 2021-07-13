@@ -1,12 +1,14 @@
-"""my_4_supervisor_controller controller."""
-
+"""my_5_supervisor_controller controller."""
 from controller import Supervisor
-#from controller import Robot
+
 import struct
 supervisor = Supervisor()
-#robot = Robot()
+
 timestep = 32
 robot_node1 = supervisor.getFromDef("EPUCK1")
+robot_node2 = supervisor.getFromDef("EPUCK2")
+robot_node3 = supervisor.getFromDef("EPUCK3")
+robot_node4 = supervisor.getFromDef("EPUCK4")
 receiver1 = supervisor.getDevice("receiver1")
 receiver1.enable(timestep)
 receiver2 = supervisor.getDevice("receiver2")
@@ -17,14 +19,16 @@ receiver4 = supervisor.getDevice("receiver4")
 receiver4.enable(timestep)
 emitter = supervisor.getDevice("emitter")
 
-robot_node = supervisor.getFromDef("EPUCK1")
-t = supervisor.getTime()
-trans_field = robot_node.getField("translation")
-rot_field= robot_node.getField("rotation")
+trans_field1 = robot_node1.getField("translation")
+rot_field1= robot_node1.getField("rotation")
+trans_field2 = robot_node2.getField("translation")
+rot_field2= robot_node2.getField("rotation")
+trans_field3 = robot_node3.getField("translation")
+rot_field3= robot_node3.getField("rotation")
+trans_field4 = robot_node4.getField("translation")
+rot_field4= robot_node4.getField("rotation")
 
 global_map_dict = {}
-current_dir = []
-next_dir = []
 right = (0,1,0,-1.57071) 
 up = (0,1,0,0)
 left = (0,1,0,1.57071)
@@ -49,7 +53,13 @@ class Stack():
     def __str__(self):
         return str(self.stack)
 
-stack = Stack()
+stack1 = Stack()
+stack2 = Stack()
+stack3 = Stack()
+stack4 = Stack()
+
+stack_access_dict = {1:stack1,2:stack2,3:stack3,4:stack4}
+
 #Graph code from GeeksForGeeks
 # Python program for 
 # validation of a graph
@@ -90,23 +100,23 @@ def find_shortest_path(graph, start, end, path =[]):
 # Driver Function call 
 # to print generated graph
 #print(generate_edges(graph))
-visited = [False for i in range(63)]
-path_used = []
+visited = [False for i in range(1000)]
+
 
 #Functions
-def next_node_generator(current_node):
+def next_node_generator(current_node,robot_number):
     global visited
-    global path_used
     global graph
-    stack.push(current_node)
+    global stack_access_dict
+    stack_access_dict[robot_number].push(current_node)
     visited[current_node] = True
     for node in graph[current_node]:
         if (not visited[node]):
-            print("Node to be returned =",node)
+            #print("Node to be returned =",node)
             return node
-    stack.pop()
-    print("Back path to be returned =",stack.peek())
-    return stack.pop()
+    stack_access_dict[robot_number].pop()
+    #print("Back path to be returned =",stack.peek())
+    return stack_access_dict[robot_number].pop()
     
 
 
@@ -181,47 +191,102 @@ node_to_position,position_to_node = conversion_between_node_and_position(4)
 nodes = pow(length_of_arena,3)
     
 timings = range(2,180,2)
-current_dir = rot_field.getSFRotation()
 
-next_node = 0
-current_node = 0
+next_node1 = 0
+current_node1 = 0
+next_node2 = 0
+current_node2 = 0
+next_node3 = 0
+current_node3 = 0
+next_node4 = 0
+current_node4 = 0
 for index,time in enumerate(timings):
         
     while supervisor.getTime() < time:
         if supervisor.step(timestep) == -1:
             quit()
     if receiver1.getQueueLength()>0:
-        received_data = receiver1.getData()
-        message = struct.unpack("? f f ? ? ? ?",received_data)
-            #print("Message received")
-        current_node = position_to_node[(message[1],0,message[2])]
+        received_data1 = receiver1.getData()
+        message1 = struct.unpack("? f f ? ? ? ?",received_data1)
+        #print("Message received")
+        current_node1 = position_to_node[(message1[1],0,message1[2])]
         #print("Check =",position_to_node[(message[1],0,message[2])],(message[1],0,message[2]))
-        graph_updation(position_to_node[(message[1],0,message[2])],message[3],message[4],message[5],message[6])
-        message_to_map_converion(message[1],message[2],message[3],message[4],message[5],message[6])
-        next_node = next_node_generator(current_node)
+        graph_updation(position_to_node[(message1[1],0,message1[2])],message1[3],message1[4],message1[5],message1[6])
+        message_to_map_converion(message1[1],message1[2],message1[3],message1[4],message1[5],message1[6])
+        next_node1 = next_node_generator(current_node1,1)
         #print("Message =",message)
-        if message[0]:
+        if message1[0]:
             quit()
         #print("Map data =",global_map_dict)
         receiver1.nextPacket()
         #print("Queue lenght",receiver1.getQueueLength())
+    if receiver2.getQueueLength()>0:
+        received_data2 = receiver2.getData()
+        message2 = struct.unpack("? f f ? ? ? ?",received_data2)
+            #print("Message received")
+        current_node2 = position_to_node[(message2[1],0,message2[2])]
+        #print("Check =",position_to_node[(message[1],0,message[2])],(message[1],0,message[2]))
+        graph_updation(position_to_node[(message2[1],0,message2[2])],message2[3],message2[4],message2[5],message2[6])
+        message_to_map_converion(message2[1],message2[2],message2[3],message2[4],message2[5],message2[6])
+        next_node2 = next_node_generator(current_node2,2)
+        #print("Message =",message)
+        if message2[0]:
+            quit()
+        #print("Map data =",global_map_dict)
+        receiver2.nextPacket()
+        #print("Queue lenght",receiver1.getQueueLength())
+    if receiver3.getQueueLength()>0:
+        received_data3 = receiver3.getData()
+        message3 = struct.unpack("? f f ? ? ? ?",received_data3)
+            #print("Message received")
+        current_node3 = position_to_node[(message3[1],0,message3[2])]
+        #print("Check =",position_to_node[(message[1],0,message[2])],(message[1],0,message[2]))
+        graph_updation(position_to_node[(message3[1],0,message3[2])],message3[3],message3[4],message3[5],message3[6])
+        message_to_map_converion(message3[1],message3[2],message3[3],message3[4],message3[5],message3[6])
+        next_node3 = next_node_generator(current_node3,3)
+        #print("Message =",message)
+        if message3[0]:
+            quit()
+        #print("Map data =",global_map_dict)
+        receiver3.nextPacket()
+        #print("Queue lenght",receiver1.getQueueLength())
+    if receiver4.getQueueLength()>0:
+        received_data4 = receiver4.getData()
+        message4 = struct.unpack("? f f ? ? ? ?",received_data4)
+            #print("Message received")
+        current_node4 = position_to_node[(message4[1],0,message4[2])]
+        #print("Check =",position_to_node[(message[1],0,message[2])],(message[1],0,message[2]))
+        graph_updation(position_to_node[(message4[1],0,message4[2])],message4[3],message4[4],message4[5],message4[6])
+        message_to_map_converion(message4[1],message4[2],message4[3],message4[4],message4[5],message4[6])
+        next_node4 = next_node_generator(current_node4,4)
+        #print("Message =",message)
+        if message4[0]:
+            quit()
+        #print("Map data =",global_map_dict)
+        receiver4.nextPacket()
+        #print("Queue lenght",receiver1.getQueueLength())
+    
     if bool(graph):        
         #print("Graph",generate_edges(graph))
         print("Graph",graph)
-        trans_field.setSFVec3f(list(node_to_position[next_node]))
+        trans_field1.setSFVec3f(list(node_to_position[next_node1]))
+        trans_field2.setSFVec3f(list(node_to_position[next_node2]))
+        trans_field3.setSFVec3f(list(node_to_position[next_node3]))
+        trans_field4.setSFVec3f(list(node_to_position[next_node4]))
         #print("Current node Robot is in =",next_node)
             
-        (x,y,z,angle) = rot_field.getSFRotation()
+        #(x,y,z,angle) = rot_field.getSFRotation()
         #print("Current orientation =",round(x),round(y),round(z),round(angle,4))
-        rot_field.setSFRotation(list(next_direction(current_node,next_node)))
-        robot_node.resetPhysics()
-    #
+        print("Current node =",current_node1,"Next node =",next_node1)
+        rot_field1.setSFRotation(list(next_direction(current_node1,next_node1)))
+        rot_field2.setSFRotation(list(next_direction(current_node2,next_node2)))
+        rot_field3.setSFRotation(list(next_direction(current_node3,next_node3)))
+        rot_field4.setSFRotation(list(next_direction(current_node4,next_node4)))
+        robot_node1.resetPhysics()
+        robot_node2.resetPhysics()
+        robot_node3.resetPhysics()
+        robot_node4.resetPhysics()
     
     
-    #if receiver2.getQueueLength()>0:
-        #received_data = receiver1.getData()
-        #message = struct.unpack("? f f ? ? ? ?",received_data)
-        #message_to_map_converion(message[1],message[2],message[3],message[4],message[5],message[6])
-        #print("Message =",message)
-        #print("Map data =",global_map_dict)
-        #receiver2.nextPacket()
+    
+   
