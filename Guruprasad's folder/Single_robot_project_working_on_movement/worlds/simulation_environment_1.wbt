@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999624989823761 0.002149129456561127 0.008389390412925569 1.0068651619722249
-  position 0.3138367339224033 11.0460855508567 7.350985863627326
+  position 0.31439660375175416 10.819543474286403 7.20769898170297
   follow "E-PUCK1"
 }
 TexturedBackground {
@@ -20,14 +20,9 @@ RectangleArena {
   floorTileSize 2 2
   wallHeight 0
 }
-DEF TURNSSUPERVISOR Robot {
-  name "TURNS_SUPERVISOR"
-  supervisor TRUE
-}
 DEF MAINSUPERVISOR Robot {
   children [
     Emitter {
-      channel 5
     }
     Receiver {
       name "receiver1"
@@ -47,7 +42,7 @@ DEF MAINSUPERVISOR Robot {
     }
   ]
   name "MAIN-SUPERVISOR"
-  controller "my_5_supervisor_controller"
+  controller "mypuck_supervisor"
   supervisor TRUE
 }
 DEF Laptop Robot {
@@ -254,7 +249,7 @@ DEF EPUCK1 E-puck {
   translation -3.5 -8.53891e-05 -3.5
   rotation 0 -1 0 5.307156870259904e-06
   name "E-PUCK1"
-  controller "comms2"
+  controller "mypuck_comms_only_controller"
   receiver_channel 5
   turretSlot [
     GPS {
@@ -319,7 +314,7 @@ DEF EPUCK2 E-puck {
   translation 3.5 -6.39203e-05 3.5
   rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
   name "E-PUCK2"
-  controller "comms2"
+  controller "mypuck_comms_only_controller"
   emitter_channel 2
   turretSlot [
     GPS {
@@ -383,8 +378,13 @@ DEF EPUCK2 E-puck {
 DEF EPUCK3 E-puck {
   translation 3.5 -6.39203e-05 -3.5
   rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+<<<<<<< Updated upstream
   name "E-PUCK3"
   controller "comms2"
+=======
+  name "E-PUCK2(1)"
+  controller "mypuck_comms_only_controller"
+>>>>>>> Stashed changes
   emitter_channel 3
   turretSlot [
     GPS {
@@ -448,8 +448,13 @@ DEF EPUCK3 E-puck {
 DEF EPUCK4 E-puck {
   translation -3.5 -6.39203e-05 3.5
   rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+<<<<<<< Updated upstream
   name "E-PUCK4"
   controller "comms2"
+=======
+  name "E-PUCK2(2)"
+  controller "mypuck_comms_only_controller"
+>>>>>>> Stashed changes
   emitter_channel 4
   turretSlot [
     GPS {

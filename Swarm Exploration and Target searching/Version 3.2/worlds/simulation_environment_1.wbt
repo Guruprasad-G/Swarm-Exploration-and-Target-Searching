@@ -6,14 +6,9 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-<<<<<<< Updated upstream
-  orientation -0.9999653502371748 -0.007325571714323478 0.003954026315334755 0.9268916294085008
-  position 0.030032626246788374 2.4649702495329207 1.906022871165309
-=======
-  orientation -0.9988375030101142 0.03196600016451937 0.03608070694986431 1.5078115168562432
-  position 0.05489333809978364 4.7496324018657825 -0.20125379999898352
->>>>>>> Stashed changes
-  follow "e-puck"
+  orientation -0.9999624989823761 0.002149129456561127 0.008389390412925569 1.0068651619722249
+  position 0.31439660375175416 10.819543474286403 7.20769898170297
+  follow "E-PUCK1"
 }
 TexturedBackground {
 }
@@ -23,14 +18,40 @@ RectangleArena {
   name "rectangle arena(1)"
   floorSize 10 10
   floorTileSize 2 2
-  wallHeight 0.5
+  wallHeight 0
 }
-Robot {
-  translation -0.369999 0 -0.42
-  rotation 0 1 0 3.14159
+DEF MAINSUPERVISOR Robot {
+  children [
+    Emitter {
+    }
+    Receiver {
+      name "receiver1"
+      channel 1
+    }
+    Receiver {
+      name "receiver2"
+      channel 2
+    }
+    Receiver {
+      name "receiver3"
+      channel 3
+    }
+    Receiver {
+      name "receiver4"
+      channel 4
+    }
+  ]
+  name "MAIN-SUPERVISOR"
+  controller "mypuck_supervisor"
+  supervisor TRUE
+}
+DEF Laptop Robot {
+  translation -0.821503 -0.00113837 -0.503614
+  rotation 0.0013048403932002053 0.9999983013391825 -0.0013018103922871457 -1.5708053071795867
   children [
     HingeJoint {
       jointParameters HingeJointParameters {
+        position 4.064684964007496e-06
         anchor 0 0.0142 0.0546
         minStop -2.105
         maxStop 0.01
@@ -41,8 +62,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.0145 0.13 0.1
-        rotation 1 0 0 0
+        translation 0.014499999999999558 0.1299998154623425 0.10000047069014026
+        rotation 1 0 0 4.0647133925121234e-06
         children [
           Shape {
             appearance PBRAppearance {
@@ -206,7 +227,7 @@ Robot {
       }
     }
   ]
-  name "laptop"
+  name "LAPTOP"
   model "laptop"
   boundingObject Transform {
     translation -0.005 0.01 -0.058
@@ -224,9 +245,207 @@ Robot {
   ]
   controller "laptop_switch_on"
 }
-E-puck {
-  translation 0.5 0 0.5
-  controller "using_gps"
+DEF EPUCK1 E-puck {
+  translation -3.5 -8.53891e-05 -3.5
+  rotation 0 -1 0 5.307156870259904e-06
+  name "E-PUCK1"
+  controller "mypuck_comms_only_controller"
+  receiver_channel 5
+  turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
+    }
+  ]
+}
+DEF EPUCK2 E-puck {
+  translation 3.5 -6.39203e-05 3.5
+  rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+  name "E-PUCK2"
+  controller "mypuck_comms_only_controller"
+  emitter_channel 2
+  turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
+    }
+  ]
+}
+DEF EPUCK3 E-puck {
+  translation 3.5 -6.39203e-05 -3.5
+  rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+  name "E-PUCK2(1)"
+  controller "mypuck_comms_only_controller"
+  emitter_channel 3
+  turretSlot [
+    GPS {
+      translation 0 0.00025 0
+    }
+    DistanceSensor {
+      translation -7.34639e-08 -0.009 -0.04
+      rotation 0 1 0 1.5708
+      name "up_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 2.34464e-07 0.001 0.02
+      rotation 0 1 0 -1.5707953071795862
+      name "down_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation 0.033 -0.006 -0.01
+      rotation 0 -1 0 -5.307179586466759e-06
+      name "right_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    DistanceSensor {
+      translation -0.033 -0.006 -0.00999973
+      rotation 0 1 0 -3.1415853071795863
+      name "left_sensor"
+      lookupTable [
+        0 0 0
+        10000 10000 0
+      ]
+    }
+    Camera {
+      translation 0 0 -0.035
+      name "colour_camera"
+      recognitionColors [
+        1 0 0
+      ]
+      fieldOfView 0.7854
+      width 250
+      height 250
+      recognition Recognition {
+      }
+    }
+  ]
+  groundSensorsSlot [
+    Compass {
+      rotation 0 1 0 3.14159
+    }
+  ]
+}
+DEF EPUCK4 E-puck {
+  translation -3.5 -6.39203e-05 3.5
+  rotation 0.000323569999714327 3.729950861472446e-11 0.9999999476512264 6.061970373266844e-06
+  name "E-PUCK2(2)"
+  controller "mypuck_comms_only_controller"
+  emitter_channel 4
   turretSlot [
     GPS {
       translation 0 0.00025 0
@@ -287,10 +506,12 @@ E-puck {
   ]
 }
 DEF mybot Robot {
-  translation 0.49961 0.07 -1.1465
+  translation 1.16525 0.0397998 -4.39262
+  rotation -0.562737841661225 0.11854091644811797 -0.8180917874481483 -1.8262004054017278e-07
   children [
     DEF WHEEL HingeJoint {
       jointParameters HingeJointParameters {
+        position 2.2102755180892345e-11
         anchor 0.06 0 -0.05
       }
       device [
@@ -299,7 +520,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation 0.06 0 -0.05
-        rotation 0 0 1 1.5708
+        rotation 2.265523167803742e-09 -2.2655314895502883e-09 1 1.5708
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -319,6 +540,7 @@ DEF mybot Robot {
     }
     DEF WHEEL HingeJoint {
       jointParameters HingeJointParameters {
+        position 2.875185241059213e-07
         anchor 0.06 0 -0.05
       }
       device [
@@ -327,7 +549,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation -0.06 0 -0.05
-        rotation 0 0 1 1.5708
+        rotation 1.437587339966735e-07 -1.437592620529621e-07 0.9999999999999793 1.5708000000000204
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -347,6 +569,7 @@ DEF mybot Robot {
     }
     DEF WHEEL HingeJoint {
       jointParameters HingeJointParameters {
+        position -2.8835377818836605e-07
         anchor 0.06 0 -0.05
       }
       device [
@@ -354,8 +577,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation -0.06 0 0.05
-        rotation 0 0 1 1.5708
+        translation -0.059999999999992865 2.8835377818834682e-08 0.049999999999990496
+        rotation -1.4417635950387275e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -375,6 +598,7 @@ DEF mybot Robot {
     }
     DEF WHEEL HingeJoint {
       jointParameters HingeJointParameters {
+        position -1.4714455165432128e-07
         anchor 0.06 0 -0.05
       }
       device [
@@ -382,8 +606,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation 0.06 0 0.05
-        rotation 0 0 1 1.5708
+        translation 0.06 1.4714455165432608e-08 0.05000000000000249
+        rotation -7.357200558159767e-08 7.357227582716037e-08 0.9999999999999946 1.570800000000005
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -414,7 +638,7 @@ DEF mybot Robot {
   }
 }
 Wall {
-  translation 1 0 4.5
+  translation 4 -1.06581e-14 0.5
   rotation 0 1 0 1.5708
   name "wall(3)"
   size 1 0.4 0.02
@@ -426,7 +650,7 @@ Wall {
   }
 }
 Wall {
-  translation 1 0 3.5
+  translation 4 -8.88178e-15 1.5
   rotation 0 1 0 1.5708
   name "wall(8)"
   size 1 0.4 0.02
@@ -438,7 +662,7 @@ Wall {
   }
 }
 Wall {
-  translation 1 0 0.5
+  translation 0 0 0.5
   rotation 0 1 0 1.5708
   name "wall(18)"
   size 1 0.4 0.02
@@ -450,7 +674,7 @@ Wall {
   }
 }
 Wall {
-  translation -1 0 -4.5
+  translation 4 -1.77636e-15 -0.5
   rotation 0 1 0 1.5708
   name "wall(24)"
   size 1 0.4 0.02
@@ -462,7 +686,7 @@ Wall {
   }
 }
 Wall {
-  translation -1 0 -3.5
+  translation -2 1.77636e-15 -3.5
   rotation 0 1 0 1.5708
   name "wall(25)"
   size 1 0.4 0.02
@@ -474,7 +698,7 @@ Wall {
   }
 }
 Wall {
-  translation -1 0 -2.5
+  translation -2 0 -2.5
   rotation 0 1 0 1.5708
   name "wall(28)"
   size 1 0.4 0.02
@@ -486,7 +710,7 @@ Wall {
   }
 }
 Wall {
-  translation 1 0 -2.5
+  translation 0 0 -2.5
   rotation 0 1 0 1.5708
   name "wall(29)"
   size 1 0.4 0.02
@@ -498,7 +722,7 @@ Wall {
   }
 }
 Wall {
-  translation -1 0 3.5
+  translation 4 0 2.5
   rotation 0 1 0 1.5708
   name "wall(5)"
   size 1 0.4 0.02
@@ -510,7 +734,7 @@ Wall {
   }
 }
 Wall {
-  translation -1 0 0.5
+  translation -2 0 0.5
   rotation 0 1 0 1.5708
   name "wall(15)"
   size 1 0.4 0.02
@@ -522,7 +746,7 @@ Wall {
   }
 }
 Wall {
-  translation 3 0 -0.5
+  translation 4 0 -1.5
   rotation 0 1 0 1.5708
   name "wall(38)"
   size 1 0.4 0.02
@@ -534,7 +758,7 @@ Wall {
   }
 }
 Wall {
-  translation 3 0 -4.5
+  translation 4 0 -2.5
   rotation 0 1 0 1.5708
   name "wall(42)"
   size 1 0.4 0.02
@@ -546,7 +770,7 @@ Wall {
   }
 }
 Wall {
-  translation 3 0 -3.5
+  translation 4 -3.55271e-15 -3.5
   rotation 0 1 0 1.5708
   name "wall(43)"
   size 1 0.4 0.02
@@ -558,7 +782,7 @@ Wall {
   }
 }
 Wall {
-  translation 3 0 3.5
+  translation 4 0 3.5
   rotation 0 1 0 1.5708
   name "wall(41)"
   size 1 0.4 0.02
@@ -570,7 +794,7 @@ Wall {
   }
 }
 Wall {
-  translation -1 0 -0.5
+  translation -2 0 -0.5
   rotation 0 1 0 1.5708
   name "wall(31)"
   size 1 0.4 0.02
@@ -582,7 +806,7 @@ Wall {
   }
 }
 Wall {
-  translation -4.5 0 3
+  translation -3.5 -7.10543e-15 -1
   name "wall(1)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -593,7 +817,7 @@ Wall {
   }
 }
 Wall {
-  translation -1.5 0 4
+  translation -2.5 0 4
   name "wall(4)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -604,8 +828,8 @@ Wall {
   }
 }
 Wall {
-  translation -3.5 0 0
-  name "wall(11)"
+  translation -3.5 0 4
+  name "wall(52)"
   size 1 0.4 0.02
   appearance Roughcast {
     colorOverride 1 1 0
@@ -615,19 +839,8 @@ Wall {
   }
 }
 Wall {
-  translation -3.5 0 -2
-  name "wall(13)"
-  size 1 0.4 0.02
-  appearance Roughcast {
-    colorOverride 1 1 0
-    textureTransform TextureTransform {
-      scale 1 2.4
-    }
-  }
-}
-Wall {
-  translation -3.5 0 -4
-  name "wall(21)"
+  translation -1.5 0 4
+  name "wall(50)"
   size 1 0.4 0.02
   appearance Roughcast {
     colorOverride 1 1 0
@@ -638,7 +851,86 @@ Wall {
 }
 Wall {
   translation -0.5 0 3
+  name "wall(11)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -2.5 5.32907e-15 -4
+  name "wall(51)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -3.5 5.32907e-15 -4
+  name "wall(53)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 0 -2.91323e-13 2.5
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(13)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 2 -2.91323e-13 2.5
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(58)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -1.5 9.59233e-14 -4
+  name "wall(21)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -0.5 0 4
   name "wall(6)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -3.5 -2.66454e-15 2
+  name "wall(49)"
   size 1 0.4 0.02
   appearance Roughcast {
     colorOverride 1 1 0
@@ -670,7 +962,18 @@ Wall {
   }
 }
 Wall {
-  translation -0.5 0 -2
+  translation -1.5 0 -1
+  name "wall(54)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -1.5 0 -2
   name "wall(26)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -681,7 +984,7 @@ Wall {
   }
 }
 Wall {
-  translation 0.5 0 -2
+  translation -0.5 0 -2
   name "wall(27)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -703,7 +1006,18 @@ Wall {
   }
 }
 Wall {
-  translation 0.5 0 1
+  translation 0.5 0 -3
+  name "wall(56)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -1.5 0 1
   name "wall(16)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -725,7 +1039,7 @@ Wall {
   }
 }
 Wall {
-  translation 3.5 0 -1
+  translation 0.5 0 -4
   name "wall(36)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -736,7 +1050,7 @@ Wall {
   }
 }
 Wall {
-  translation 3.5 0 -3
+  translation 3.5 0 -4
   name "wall(44)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -747,7 +1061,8 @@ Wall {
   }
 }
 Wall {
-  translation 4.5 0 1
+  translation 2 0 0.5
+  rotation 0 1 0 -1.5707953071795862
   name "wall(35)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -758,7 +1073,19 @@ Wall {
   }
 }
 Wall {
-  translation 4.5 0 3
+  translation 2 0 -0.5
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(55)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 2.5 -1.77636e-15 -4
   name "wall(39)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -769,7 +1096,18 @@ Wall {
   }
 }
 Wall {
-  translation 3.5 0 3
+  translation 1.5 -1.77636e-15 -4
+  name "wall(45)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 3.5 0 2
   name "wall(40)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -780,7 +1118,29 @@ Wall {
   }
 }
 Wall {
-  translation 4.5 0 -1
+  translation 2.5 8.88178e-16 2
+  name "wall(57)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 3.5 0 4
+  name "wall(23)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -0.5 3.55271e-15 -4
   name "wall(37)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -791,7 +1151,7 @@ Wall {
   }
 }
 Wall {
-  translation 0.5 0 -1
+  translation 2.5 0 1
   name "wall(32)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -802,7 +1162,29 @@ Wall {
   }
 }
 Wall {
-  translation 0.5 0 3
+  translation 1.5 0 4
+  name "wall(46)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 2.5 1.77636e-15 4
+  name "wall(47)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 0.5 0 4
   name "wall(7)"
   size 1 0.4 0.02
   appearance Roughcast {
@@ -813,7 +1195,19 @@ Wall {
   }
 }
 Wall {
-  translation -4 0 4.5
+  translation -2 5.32907e-15 3.5
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(48)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -4 0 2.5
   rotation 0 1 0 1.5708
   name "wall(2)"
   size 1 0.4 0.02
@@ -825,7 +1219,7 @@ Wall {
   }
 }
 Wall {
-  translation -4 0 1.5
+  translation -4 5.15143e-14 1.5
   rotation 0 1 0 1.5708
   name "wall(9)"
   size 1 0.4 0.02
@@ -837,7 +1231,7 @@ Wall {
   }
 }
 Wall {
-  translation -4 0 0.5
+  translation -4 -5.86198e-14 0.5
   rotation 0 1 0 1.5708
   name "wall(10)"
   size 1 0.4 0.02
@@ -849,7 +1243,7 @@ Wall {
   }
 }
 Wall {
-  translation -4 0 -2.5
+  translation -4 -5.15143e-14 -2.5
   rotation 0 1 0 1.5708
   name "wall(19)"
   size 1 0.4 0.02
@@ -861,7 +1255,7 @@ Wall {
   }
 }
 Wall {
-  translation -4 0 -3.5
+  translation -4 -7.10543e-15 -3.5
   rotation 0 1 0 1.5708
   name "wall(20)"
   size 1 0.4 0.02
@@ -873,7 +1267,7 @@ Wall {
   }
 }
 Wall {
-  translation -3 0 -0.5
+  translation -4 0 -0.5
   rotation 0 1 0 1.5708
   name "wall(12)"
   size 1 0.4 0.02
@@ -885,7 +1279,7 @@ Wall {
   }
 }
 Wall {
-  translation -3 0 -1.5
+  translation -4 0 -1.5
   rotation 0 1 0 1.5708
   name "wall(14)"
   size 1 0.4 0.02
@@ -897,7 +1291,7 @@ Wall {
   }
 }
 Wall {
-  translation -3 0 -4.5
+  translation -4 1.06581e-14 3.5
   rotation 0 1 0 1.5708
   name "wall(22)"
   size 1 0.4 0.02
