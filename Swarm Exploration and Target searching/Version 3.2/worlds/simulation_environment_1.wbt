@@ -6,8 +6,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.9999624989823761 0.002149129456561127 0.008389390412925569 1.0068651619722249
-  position 0.31439660375175416 10.819543474286403 7.20769898170297
+  orientation -0.9999697020118165 -0.006975316559789182 0.0034554330104434763 0.996889361808662
+  position -0.10490899511871622 11.15022527274025 7.510348292432124
   follow "E-PUCK1"
 }
 TexturedBackground {
@@ -18,7 +18,6 @@ RectangleArena {
   name "rectangle arena(1)"
   floorSize 10 10
   floorTileSize 2 2
-  wallHeight 0
 }
 DEF MAINSUPERVISOR Robot {
   children [
@@ -62,7 +61,7 @@ DEF Laptop Robot {
         }
       ]
       endPoint Solid {
-        translation 0.014499999999999558 0.1299998154623425 0.10000047069014026
+        translation 0.014499999999999496 0.129999815462342 0.10000047069013976
         rotation 1 0 0 4.0647133925121234e-06
         children [
           Shape {
@@ -520,7 +519,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation 0.06 0 -0.05
-        rotation 2.265523167803742e-09 -2.2655314895502883e-09 1 1.5708
+        rotation 2.5749606037069873e-09 -2.5749700620827855e-09 1 1.5708
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -549,7 +548,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation -0.06 0 -0.05
-        rotation 1.437587339966735e-07 -1.437592620529621e-07 0.9999999999999793 1.5708000000000204
+        rotation 1.437587339966735e-07 -1.4375926205296257e-07 0.9999999999999793 1.5708000000000204
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -577,8 +576,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation -0.059999999999992865 2.8835377818834682e-08 0.049999999999990496
-        rotation -1.4417635950387275e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
+        translation -0.059999999999991865 2.8835377818834467e-08 0.04999999999998975
+        rotation -1.441763595038733e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -606,7 +605,7 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation 0.06 1.4714455165432608e-08 0.05000000000000249
+        translation 0.06 1.4714455165432683e-08 0.050000000000002986
         rotation -7.357200558159767e-08 7.357227582716037e-08 0.9999999999999946 1.570800000000005
         children [
           DEF Wheel Shape {

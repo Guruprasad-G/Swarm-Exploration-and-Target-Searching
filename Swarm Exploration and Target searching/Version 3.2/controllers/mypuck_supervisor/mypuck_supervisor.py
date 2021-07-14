@@ -132,6 +132,15 @@ def message_to_map_converion(X_pos,Z_pos,r_detail,u_detail,l_detail,d_detail):
     surrounding = [r_detail,u_detail,l_detail,d_detail]
     global_map_dict[(X_pos,Z_pos)] = global_map_dict.get((X_pos,Z_pos),surrounding)
 
+def write_map_to_file():
+    '''This function writes the data stored in the Global Map data to a text file'''
+    global global_map_dict
+    file_handle = open("Map_details.txt", "w")
+    for key,value in global_map_dict.items():
+        sentence = "Position,{},{},Data,{},{},{},{}\n".format(str(key[0]),str(key[1]),str(value[0]),str(value[1]),str(value[2]),str(value[3]))
+        file_handle.write(sentence)
+    file_handle.close()
+
 def graph_updation(current_node,r,u,l,d):
     '''This function updates the nodes and their connection to graph data structure based on message received from the robots'''
     global graph
@@ -185,7 +194,7 @@ def conversion_between_node_and_position(length_of_arena,division=True):
 #print("Debug :","Node <=> Positions",node_to_position,"\n",position_to_node)
 #nodes = pow(length_of_arena,3)
 #Varible to monitor timing    
-timings = range(2,180,2)
+timings = range(2,180,1)
 
 #Looping through available timings
 for index,time in enumerate(timings):
@@ -208,6 +217,8 @@ for index,time in enumerate(timings):
         #Calling function to receive next node the robot has to translate to
         next_node1 = next_node_generator(current_node1,1)
         if message1[0]:
+            #Write the Global Map data to a test file
+            write_map_to_file()
             #Stop supervisor if target is found and reached
             quit()
         receiver1.nextPacket()
@@ -228,6 +239,8 @@ for index,time in enumerate(timings):
         #Calling function to receive next node the robot has to translate to
         next_node2 = next_node_generator(current_node2,2)
         if message2[0]:
+            #Write the Global Map data to a test file
+            write_map_to_file()
             #Stop supervisor if target is found and reached
             quit()
         receiver2.nextPacket()
@@ -248,6 +261,8 @@ for index,time in enumerate(timings):
         #Calling function to receive next node the robot has to translate to
         next_node3 = next_node_generator(current_node3,3)
         if message3[0]:
+            #Write the Global Map data to a test file
+            write_map_to_file()
             #Stop supervisor if target is found and reached
             quit()
         receiver3.nextPacket()
@@ -268,6 +283,8 @@ for index,time in enumerate(timings):
         #Calling function to receive next node the robot has to translate to
         next_node4 = next_node_generator(current_node4,4)
         if message4[0]:
+            #Write the Global Map data to a test file
+            write_map_to_file()
             #Stop supervisor if target is found and reached
             quit()
         receiver4.nextPacket()

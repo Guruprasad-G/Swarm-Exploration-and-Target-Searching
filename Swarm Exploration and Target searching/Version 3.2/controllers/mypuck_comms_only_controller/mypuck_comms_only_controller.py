@@ -25,6 +25,8 @@ left_sensor = robot.getDevice("left_sensor")
 left_sensor.enable(timeStep)
 down_sensor = robot.getDevice("down_sensor")
 down_sensor.enable(timeStep)
+speaker = robot.getDevice("speaker")
+#speaker.enable(timeStep)
 
 #Declaring standandard values (Standard Right, Up, Left and Down values got from the compass)
 right = (0.0, -0.0, 1.0)
@@ -34,11 +36,11 @@ down = (0.0, -1.0, -0.0)
 #Variable which turn True when target is detected/reached
 done = False
 #Dicticonary to store Map data
-global_dict = {}
+local_dict = {}
 
 #Fucntions
 def robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value):
-    '''This function checks which direction the robot is facing and returns the surrounding data with respect to actual(global) directions'''
+    '''This function checks which direction the robot is facing and returns the surrounding data with respect to actual(local) directions'''
     global right
     global up
     global left
@@ -69,7 +71,7 @@ def obstacle_finder(inp):
 #Main Infinite Loop
 while robot.step(timeStep) != -1:
     #Varible to monitor timing
-    timings = range(2,180,2)
+    timings = range(2,180,1)
     #Looping through available timings
     for index,time in enumerate(timings):
         #This While loop to holds the robot until required time is met
@@ -107,17 +109,19 @@ while robot.step(timeStep) != -1:
                 if target_pos[0]>=0.0085:
                     #Setting the done varibale to True since target is detected and robot is near the target
                     done = True
+                    #Speaker sound is played only when sound file is presnt along with proto files
+                    speaker.playSound(speaker,speaker, "test4.wav", 1.0, 1.0, 0.0, True)
                     #print("Target is at position","X =",x_pos_of_target,"Y =",y_pos_of_target,"Z =",z_pos_of_target)
                     print("Relative_pos =",target_pos,"Model =",target_model)
         #Varibale to store data regarding Clear-path or Wall in all four directions
         surrounding = []
         #Obatain surroundings data by passign robot orientation and sensor data
         surrounding = robot_orientation(compass_val,surrounding,right_value,up_value,left_value,down_value)
-        #Updating Global map data
-        global_dict[(X_pos,Z_pos)] = global_dict.get((X_pos,Z_pos),surrounding)
+        #Updating local map data
+        local_dict[(X_pos,Z_pos)] = local_dict.get((X_pos,Z_pos),surrounding)
         #Pack the message into bytes for transmission
         message = struct.pack("? f f ? ? ? ?",done,X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
         #print("Message =",X_pos,Z_pos,surrounding[0],surrounding[1],surrounding[2],surrounding[3])
         #Sending the message
         emitter.send(message)
-    #print("Global dict :",global_dict)
+    #print("Local dict :",local_dict)
