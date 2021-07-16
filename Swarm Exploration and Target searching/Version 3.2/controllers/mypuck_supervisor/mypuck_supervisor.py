@@ -124,7 +124,7 @@ def next_node_generator(current_node,robot_number):
     #If all connected nodes are visited, pop out current node from stack
     stack_access_dict[robot_number].pop()
     #Return the node that was pushed into the stack before the current node
-    #print("Debug: ","Back path to be returned =",stack.peek())
+    #print("Debug: ","Back path to be returned =",stack_access_dict[robot_number].peek())
     return stack_access_dict[robot_number].pop()
 
 def message_to_map_converion(X_pos,Z_pos,r_detail,u_detail,l_detail,d_detail):
@@ -146,9 +146,9 @@ def graph_updation(current_node,r,u,l,d):
     '''This function updates the nodes and their connection to graph data structure based on message received from the robots'''
     global length_of_arena
     global graph
-    if u and (current_node-length_of_arena not in graph[current_node]):
+    if u and (current_node-length_of_arena not in graph[current_node]) and (current_node-length_of_arena >=0):
         addEdge(graph,current_node,current_node-length_of_arena)
-    if l and (current_node-1 not in graph[current_node]):
+    if l and (current_node-1 not in graph[current_node]) and (current_node-1>=0):
         addEdge(graph,current_node,current_node-1)
     if r and (current_node+1 not in graph[current_node]):
         addEdge(graph,current_node,current_node+1)
