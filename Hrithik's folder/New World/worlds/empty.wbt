@@ -3,85 +3,86 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.04025381945326256 0.9105480860030072 0.4114387112264526 3.3045010838985065
-  position -2.932194189725041 18.639816593565758 -16.887176216929085
+  orientation 0.9999380865028372 -0.004766389370002411 -0.010055082964252234 5.376308836881328
+  position 0.5701372856308997 17.259599835468297 13.647311276400348
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
+  translation 0.01 0 0
   floorSize 12 12
   floorTileSize 2 2
   wallThickness 0
   wallHeight 0
 }
 Wall {
-  translation 3.5 0 -2
+  translation 3.53 0 -1.99
   name "wall(34)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 0.5 0 -1
+  translation 0.51 0 -1.03
   name "wall(33)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 1 0 -1.5
+  translation 1.01178 0 -1.47961
   rotation 0 1 0 -1.571595307179586
   name "wall(32)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 3 0 -1.5
+  translation 3.02173 0 -1.46805
   rotation 0 1 0 -1.571595307179586
   name "wall(31)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -4 0 2.5
+  translation -3.95141 0 2.44644
   rotation 0 1 0 -1.571595307179586
   name "wall(30)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -3 0 3.5
+  translation -2.96223 0 3.45726
   rotation 0 1 0 -1.571595307179586
   name "wall(29)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -3.5 0 3
+  translation -3.47182 0 2.95683
   rotation 0 1 0 -0.000795307179585869
   name "wall(27)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -2.5 0 4
-  rotation 0 -0.9999999999999999 0 0.0007953071793123566
+  translation -2.48263 0 3.98765
+  rotation 0 1 0 -0.000795307179585869
   name "wall(28)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -2 0 4.5
+  translation -1.97302 0 4.49805
   rotation 0 1 0 1.57
   name "wall(26)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -0.5 0 1
+  translation -0.50019 0 0.959268
   rotation 0 1 0 3.1408
   name "wall(25)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -2.5 0 -1
+  translation -2.47862 0 -1.01235
   rotation 0 1 0 -0.000795307179585869
   name "wall(24)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -2 0 -1.5
+  translation -1.99817 0 -1.54197
   rotation 0 1 0 1.57
   name "wall(23)"
   size 1 0.2 0.01
@@ -372,7 +373,7 @@ DEF EPUCK1 E-puck {
   ]
 }
 DEF EPUCK2 E-puck {
-  translation 4.5 0 4.5
+  translation -4.5 0 4.5
   name "E-PUCK2"
   controller "mypuck_comms_only_controller"
   emitter_channel 2
@@ -428,8 +429,7 @@ DEF EPUCK2 E-puck {
   ]
 }
 DEF EPUCK3 E-puck {
-  translation 4.5 0 -4.5
-  rotation 1 0 0 4.692820414042842e-06
+  translation 4.5 0 4.5
   name "E-PUCK3"
   controller "mypuck_comms_only_controller"
   emitter_channel 3
@@ -485,7 +485,7 @@ DEF EPUCK3 E-puck {
   ]
 }
 DEF EPUCK4 E-puck {
-  translation -4.5 0 4.5
+  translation 4.5 0 -4.5
   name "E-PUCK4"
   controller "mypuck_comms_only_controller"
   emitter_channel 4
@@ -541,128 +541,129 @@ DEF EPUCK4 E-puck {
   ]
 }
 Wall {
-  translation 3 0 -0.5
+  translation 3.03 0 -0.51
   rotation 0 1 0 -1.5707953071795862
   name "wall(22)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 3.5 0 0
+  translation 3.53 0 -0.04
   name "wall(21)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 3.5 0 -1
+  translation 3.53 0 -0.99
   name "wall(20)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 4.5 0 -1
+  translation 4.53 0 -0.99
   name "wall(19)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 1.5 0 4
+  translation 1.49 0 3.98
   name "wall(18)"
   size 3 0.2 0.01
 }
 Wall {
-  translation 3 0 3.5
+  translation 3.00784 0 3.50212
   rotation 0 1 0 1.57
   name "wall(17)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -3.5 0 -2
+  translation -3.43882 0 -1.97232
+  rotation 0 1 0 3.1408
   name "wall(5)"
-  size 1 0.2 0.01
+  size 1.1 0.2 0.01
 }
 Wall {
-  translation -3 0 -1.5
+  translation -2.96823 0 -1.46275
   rotation 0 1 0 1.57
   name "wall(16)"
   size 1 0.2 0.01
 }
 Wall {
-  translation -2 0 1.5
+  translation -1.98 0 1.5
   rotation 0 1 0 -1.5707996938995747
   name "wall(15)"
   size 3 0.2 0.01
 }
 Wall {
-  translation 0 0 5
+  translation 0.02 0 4.98998
   name "wall(14)"
   size 10 0.2 0.01
 }
 Wall {
-  translation 0 0 -5
+  translation 0.02 0 -4.99002
   name "wall(13)"
   size 10 0.2 0.01
 }
 Wall {
-  translation 5 0 0
+  translation 5.04 0 0.00996011
   rotation 0 1 0 1.5708003061004252
   name "wall(12)"
   size 10 0.2 0.01
 }
 Wall {
-  translation -5 0 0
+  translation -4.99 0 0.01
   rotation 0 1 0 1.5708003061004252
   name "wall(11)"
   size 10 0.2 0.01
 }
 Wall {
-  translation -0.5 0 3
+  translation -0.51 0 3
   name "wall(4)"
   size 3 0.2 0.01
 }
 Wall {
-  translation 0 0 -3
+  translation -0.02 0 -3.03
   name "wall(8)"
   size 8 0.2 0.01
 }
 Wall {
-  translation 4 0 -3.5
+  translation 4.03 0 -3.52
   rotation 0 1 0 1.5708003061004252
   name "wall(2)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 0 0 0.5
+  translation -0.000382088 0 0.480056
   rotation 0 1 0 1.57
   name "wall(1)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 4 0 4
+  translation 3.99659 0 3.94255
   rotation 0 1 0 1.57
   name "wall(10)"
   size 2 0.2 0.01
 }
 Wall {
-  translation -4 0 -2.5
+  translation -3.99838 0 -2.51274
   rotation 0 1 0 1.57
   name "wall(9)"
+  size 1.1 0.2 0.01
+}
+Wall {
+  translation 0.51 0 1.73472e-18
   size 1 0.2 0.01
 }
 Wall {
-  translation 0.5 0 0
-  size 1 0.2 0.01
-}
-Wall {
-  translation 1 0 1.5
+  translation 1.00939 0 1.50041
   rotation 0 1 0 1.57
   name "wall(3)"
   size 3 0.2 0.01
 }
 Wall {
-  translation 3.5 0 3
+  translation 3.4676 0 3.00239
   rotation 0 1 0 -0.000795307179585869
   name "wall(6)"
   size 1 0.2 0.01
 }
 Wall {
-  translation 3 0 -4
+  translation 3.06 0 -3.99
   name "wall(7)"
   size 2 0.2 0.01
 }
