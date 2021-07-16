@@ -39,7 +39,7 @@ up = (0,1,0,0)
 left = (0,1,0,1.57071)
 down = (0,1,0,3.14142)
 #Length of the Arena leaving the buffer zone
-length_of_arena = 12
+length_of_arena = 8
 #Varibles to monitor current and next nodes of the robots
 next_node1 = 0
 current_node1 = 0
@@ -53,8 +53,8 @@ current_node4 = 0
 #Dictionary containing Map data collected by each of the robots
 global_map_dict = {}
 #A list that is used to mark the nodes that are visited by the robots
-visited = [False for i in range(length_of_arena*length_of_arena)]
-#print("Debug: Visited =",visited,"Length of visited =",len(visited))
+visited = [False for i in range(64)]
+
 #Stack code from YouTube
 class Stack():
     def __init__(self):
@@ -117,7 +117,6 @@ def next_node_generator(current_node,robot_number):
     #Check the connections for current node
     for node in graph[current_node]:
         #If one of the connected node is not visited, return it
-        print("Debug: Node =",node)
         if (not visited[node]):
             #print("Debug: ","Node to be returned =",node)
             return node
@@ -144,31 +143,29 @@ def write_map_to_file():
 
 def graph_updation(current_node,r,u,l,d):
     '''This function updates the nodes and their connection to graph data structure based on message received from the robots'''
-    global length_of_arena
     global graph
-    if u and (current_node-length_of_arena not in graph[current_node]):
-        addEdge(graph,current_node,current_node-length_of_arena)
+    if u and (current_node-8 not in graph[current_node]):
+        addEdge(graph,current_node,current_node-8)
     if l and (current_node-1 not in graph[current_node]):
         addEdge(graph,current_node,current_node-1)
     if r and (current_node+1 not in graph[current_node]):
         addEdge(graph,current_node,current_node+1)
-    if d and (current_node+length_of_arena not in graph[current_node]):
-        addEdge(graph,current_node,current_node+length_of_arena)
+    if d and (current_node+8 not in graph[current_node]):
+        addEdge(graph,current_node,current_node+8)
 
 def next_direction(current_node,next_node):
     '''This function returns the orientation in which the robot has to be rotated based on current and next node'''
-    global length_of_arena
     global right
     global up
     global left
     global down
     if current_node+1 == next_node:
         return right
-    elif current_node-length_of_arena == next_node:
+    elif current_node-8 == next_node:
         return up
     elif current_node-1 == next_node:
         return left
-    elif current_node+length_of_arena == next_node:
+    elif current_node+8 == next_node:
         return down
     else:
         print("Invalid/Inbetween oriented value")
@@ -187,7 +184,7 @@ def conversion_between_node_and_position(length_of_arena,division=True):
     for z in positions_numbers:
         for x in positions_numbers:
             mid_positions.append((x,0,z))
-    for i in range(0,2*length_of_arena*2*length_of_arena):
+    for i in range(0,pow(length_of_arena,3)):
         node_to_position[i] = node_to_position.get(i,mid_positions[i])
     position_to_node = dict([(value, key) for key, value in node_to_position.items()])
     return node_to_position,position_to_node
@@ -295,13 +292,13 @@ for index,time in enumerate(timings):
     
     #Start changing the postions of robots only when the graph of nodes is not empty
     if bool(graph):        
-        print("Debug :","Graph =",graph)
+        #print("Debug :","Graph =",graph)
 
         #Debug/Monitor statements for each of the robots
         #print("Debug : First robot","Current node =",current_node1,"Next node =",next_node1)
         #print("Debug : Second robot","Current node =",current_node2,"Next node =",next_node2)
         #print("Debug : Third robot","Current node =",current_node3,"Next node =",next_node3)
-        print("Debug : Fourth robot","Current node =",current_node4,"Next node =",next_node4)
+        #print("Debug : Fourth robot","Current node =",current_node4,"Next node =",next_node4)
 
         #Setting the robots to their respective next node
         trans_field1.setSFVec3f(list(node_to_position[next_node1]))
