@@ -6,8 +6,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.9999222108015623 -0.005514937591179847 -0.011187395098125965 4.795054881756638
-  position 0.7824319760539571 31.190363739028385 2.2286467460490766
+  orientation 0.9998714923137927 0.01595121333705203 0.001599265851901046 5.2749323470347065
+  position -4.287802870368079 7.327875174954085 8.336805914226693
   follow "E-PUCK1"
 }
 TexturedBackground {
@@ -488,8 +488,8 @@ DEF MAINSUPERVISOR Robot {
   supervisor TRUE
 }
 DEF Laptop Robot {
-  translation -6.591299802192232 -0.0011373758104994726 0.5010690266391288
-  rotation -0.0013014527323058954 0.9999983011630935 -0.0013053320314806523 -1.5708051497631559
+  translation -1.47388 -0.00113578 -0.079676
+  rotation -0.0014881502281605353 -0.002734730419283984 0.999995153317471 0.00260681
   children [
     HingeJoint {
       jointParameters HingeJointParameters {
@@ -504,7 +504,7 @@ DEF Laptop Robot {
         }
       ]
       endPoint Solid {
-        translation 0.014499999999999494 0.12999964201971137 0.1000009130756793
+        translation 0.014499999999999494 0.1299996420197113 0.1000009130756793
         rotation 1 0 0 7.884953353006554e-06
         children [
           Shape {
@@ -688,7 +688,7 @@ DEF Laptop Robot {
   controller "laptop_switch_on"
 }
 DEF EPUCK1 E-puck {
-  translation -6.498759999999959 -6.398518339174701e-05 -3.53666000000006
+  translation 5.5 -6.39852e-05 -4.5
   rotation -0.0004449767879547451 -0.6654580458605475 0.7464351218928003 7.969498953588355e-06
   name "E-PUCK1"
   controller "mypuck_comms_only_controller"
@@ -753,7 +753,7 @@ DEF EPUCK1 E-puck {
   ]
 }
 DEF EPUCK2 E-puck {
-  translation -6.512849999999996 -6.39682042594264e-05 2.5258499998985973
+  translation 2.5 -6.39682e-05 2.5
   rotation 0.0004532614450865122 2.0269072876958797e-08 0.9999998972770257 5.953561725824859e-06
   name "E-PUCK2"
   controller "mypuck_comms_only_controller"
@@ -818,7 +818,7 @@ DEF EPUCK2 E-puck {
   ]
 }
 DEF EPUCK3 E-puck {
-  translation -6.572699999999996 -6.39682042594264e-05 -2.5281000001014027
+  translation -3.5 -6.39682e-05 -5.5
   rotation 0.0004532614450865122 2.0269072876958797e-08 0.9999998972770257 5.953561725824859e-06
   name "E-PUCK2(1)"
   controller "mypuck_comms_only_controller"
@@ -883,7 +883,7 @@ DEF EPUCK3 E-puck {
   ]
 }
 DEF EPUCK4 E-puck {
-  translation -6.571149999999996 -6.39682042594264e-05 3.449919999898597
+  translation -5.5 -6.50033e-05 5.5
   rotation 0.0004532614450865122 2.0269072876958797e-08 0.9999998972770257 5.953561725824859e-06
   name "E-PUCK2(2)"
   controller "mypuck_comms_only_controller"
@@ -962,7 +962,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation 0.06 0 -0.05
-        rotation 2.8422742092562934e-09 -2.842284649531595e-09 1 1.5708
+        rotation 2.974675670269713e-09 -2.974686596883633e-09 1 1.5708
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -990,8 +990,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation -0.060000000000000026 0 -0.05
-        rotation 2.8681225165492754e-07 -2.868133051770928e-07 0.9999999999999178 1.5708000000000821
+        translation -0.06000000000000019 0 -0.05
+        rotation 2.868122516549277e-07 -2.868133051770928e-07 0.9999999999999178 1.5708000000000821
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -1019,8 +1019,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation -0.05999999999999181 5.713479733770351e-08 0.049999999999977535
-        rotation -2.8567293735132084e-07 2.85673986688535e-07 0.9999999999999184 1.5708000000000817
+        translation -0.05999999999999164 5.7134797337703427e-08 0.04999999999997737
+        rotation -2.856729373513209e-07 2.85673986688535e-07 0.9999999999999184 1.5708000000000817
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -1048,8 +1048,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation 0.06 2.942843728703871e-08 0.049999999999999725
-        rotation -1.4714164595275004e-07 1.471421864351875e-07 0.9999999999999784 1.5708000000000215
+        translation 0.06 2.942843728703866e-08 0.04999999999999956
+        rotation -1.4714164595275004e-07 1.4714218643518747e-07 0.9999999999999784 1.5708000000000215
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
