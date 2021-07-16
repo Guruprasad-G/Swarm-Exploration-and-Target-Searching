@@ -39,7 +39,7 @@ up = (0,1,0,0)
 left = (0,1,0,1.57071)
 down = (0,1,0,3.14142)
 #Length of the Arena leaving the buffer zone
-length_of_arena = 12
+length_of_arena = 8
 #Varibles to monitor current and next nodes of the robots
 next_node1 = 0
 current_node1 = 0
