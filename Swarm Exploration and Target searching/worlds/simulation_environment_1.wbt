@@ -7,7 +7,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.9999757265174413 -0.00643114755723604 0.002680805291850402 1.126885838826186
-  position -0.39728126060620933 17.332596336044887 8.580167129728787
+  position -0.02449571907777598 12.443011318879291 5.933906816156675
   follow "E-PUCK1"
 }
 TexturedBackground {
@@ -45,8 +45,8 @@ DEF MAINSUPERVISOR Robot {
   supervisor TRUE
 }
 DEF Laptop Robot {
-  translation -0.829686 -0.00113609 -0.513256
-  rotation 0.0013041503953372913 0.999998303137293 -0.0013011203944187835 -1.5708053071795867
+  translation -0.245714 -0.00113609 0.515993
+  rotation -0.0013011303943879168 0.9999983031112404 -0.0013041603953063458 1.57079
   children [
     HingeJoint {
       jointParameters HingeJointParameters {
@@ -61,7 +61,7 @@ DEF Laptop Robot {
         }
       ]
       endPoint Solid {
-        translation 0.014499999999999461 0.1299998154623417 0.10000047069013948
+        translation 0.014499999999999423 0.12999981546234132 0.10000047069013926
         rotation 1 0 0 4.0647133925121234e-06
         children [
           Shape {
@@ -519,7 +519,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation 0.06 0 -0.05
-        rotation 2.7517819956516976e-09 -2.7517921035299266e-09 1 1.5708
+        rotation 2.851244028620598e-09 -2.8512545018439434e-09 1 1.5708
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -548,7 +548,7 @@ DEF mybot Robot {
       ]
       endPoint DEF Wheels Solid {
         translation -0.06 0 -0.05
-        rotation 1.437587339966735e-07 -1.437592620529628e-07 0.9999999999999793 1.5708000000000204
+        rotation 1.437587339966735e-07 -1.4375926205296297e-07 0.9999999999999793 1.5708000000000204
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -576,8 +576,8 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation -0.059999999999991366 2.883537781883436e-08 0.04999999999998937
-        rotation -1.441763595038736e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
+        translation -0.05999999999999103 2.8835377818834288e-08 0.04999999999998912
+        rotation -1.4417635950387376e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
         children [
           DEF Wheel Shape {
             appearance PBRAppearance {
@@ -605,7 +605,7 @@ DEF mybot Robot {
         }
       ]
       endPoint DEF Wheels Solid {
-        translation 0.06 1.4714455165432721e-08 0.050000000000003236
+        translation 0.06 1.4714455165432746e-08 0.0500000000000034
         rotation -7.357200558159767e-08 7.357227582716037e-08 0.9999999999999946 1.570800000000005
         children [
           DEF Wheel Shape {
@@ -906,6 +906,18 @@ Wall {
   }
 }
 Wall {
+  translation 1 -2.91323e-13 1.5
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(59)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
   translation -1.5 9.59233e-14 -4
   name "wall(21)"
   size 1 0.4 0.02
@@ -930,6 +942,17 @@ Wall {
 Wall {
   translation -3.5 -2.66454e-15 2
   name "wall(49)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation -3.5 -2.66454e-15 0
+  name "wall(61)"
   size 1 0.4 0.02
   appearance Roughcast {
     colorOverride 1 1 0
@@ -1075,6 +1098,18 @@ Wall {
   translation 2 0 -0.5
   rotation 0 1 0 -1.5707953071795862
   name "wall(55)"
+  size 1 0.4 0.02
+  appearance Roughcast {
+    colorOverride 1 1 0
+    textureTransform TextureTransform {
+      scale 1 2.4
+    }
+  }
+}
+Wall {
+  translation 2.5 0 -1
+  rotation 0 1 0 3.14159
+  name "wall(60)"
   size 1 0.4 0.02
   appearance Roughcast {
     colorOverride 1 1 0

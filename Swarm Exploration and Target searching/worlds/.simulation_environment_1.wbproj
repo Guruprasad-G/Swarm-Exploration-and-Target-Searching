@@ -9,7 +9,7 @@ textFiles: 0 "controllers/mypuck_supervisor/mypuck_supervisor.py" "controllers/m
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
 renderingDevicePerspectives: E-PUCK1:camera;0;0.820513;0;0
-renderingDevicePerspectives: E-PUCK1:colour_camera;1;0.492;0.800319;0
+renderingDevicePerspectives: E-PUCK1:colour_camera;1;0.492;0.784111;0
 renderingDevicePerspectives: E-PUCK2(1):camera;0;0.820513;0;0.591703
 renderingDevicePerspectives: E-PUCK2(1):colour_camera;1;0.388;0.829016;0.796296
 renderingDevicePerspectives: E-PUCK2(2):camera;0;1;0;0
