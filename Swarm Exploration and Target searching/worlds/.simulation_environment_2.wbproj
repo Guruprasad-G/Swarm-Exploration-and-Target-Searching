@@ -8,11 +8,11 @@ orthographicViewHeight: 1
 textFiles: 0 "controllers/mypuck_supervisor/mypuck_supervisor.py" "controllers/mypuck_comms_only_controller/mypuck_comms_only_controller.py"
 consoles: Console:All:All
 renderingDevicePerspectives: E-PUCK1:camera;0;1;0;0
-renderingDevicePerspectives: E-PUCK1:colour_camera;1;0.432;0.00649351;0
+renderingDevicePerspectives: E-PUCK1:colour_camera;1;0.26;0.00649351;0
 renderingDevicePerspectives: E-PUCK2(1):camera;0;1;0;0
-renderingDevicePerspectives: E-PUCK2(1):colour_camera;1;0.492;0.784111;0.742798
+renderingDevicePerspectives: E-PUCK2(1):colour_camera;1;0.316;0.860104;0.833333
 renderingDevicePerspectives: E-PUCK2(2):camera;0;1;0;0
-renderingDevicePerspectives: E-PUCK2(2):colour_camera;1;0.492;0.741736;0
+renderingDevicePerspectives: E-PUCK2(2):colour_camera;1;0.272;0.879102;0
 renderingDevicePerspectives: E-PUCK2:camera;0;1;0;0
-renderingDevicePerspectives: E-PUCK2:colour_camera;1;0.488;0;0.744856
+renderingDevicePerspectives: E-PUCK2:colour_camera;1;0.32;0;0.831276
 renderingDevicePerspectives: LAPTOP:display;0;0.780645;0;0

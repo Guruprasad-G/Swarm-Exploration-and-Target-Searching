@@ -1,4 +1,4 @@
-"""mypuck_supervisor controller."""
+"""four_direction_turn controller."""
 
 #Importing the Supervisor library
 from controller import Supervisor
@@ -63,7 +63,6 @@ global_map_dict = {}
 #A list that is used to mark the nodes that are visited by the robots
 visited = [False for i in range(length_of_arena*length_of_arena)]
 #print("Debug: Visited =",visited,"Length of visited =",len(visited))
-
 #Stack code from YouTube
 class Stack():
     def __init__(self):
@@ -148,15 +147,14 @@ def message_to_map_converion(X_pos,Z_pos,r_detail,u_detail,l_detail,d_detail):
     surrounding = [r_detail,u_detail,l_detail,d_detail]
     global_map_dict[(X_pos,Z_pos)] = global_map_dict.get((X_pos,Z_pos),surrounding)
 
-def write_map_to_file(target_pos):
+def write_map_to_file():
     '''This function writes the data stored in the Global Map data to a text file'''
     global global_map_dict
     file_handle = open("Map_details.txt", "w")
     for key,value in global_map_dict.items():
         sentence = "Position,{},{},Data,{},{},{},{}\n".format(str(key[0]),str(key[1]),str(value[0]),str(value[1]),str(value[2]),str(value[3]))
         file_handle.write(sentence)
-    target_pos = (target_pos[0],target_pos[2])
-    target_location = "Position,{},{},Data,{},{},{},{}\n".format(str(target_pos[0]),str(target_pos[1]),str(global_map_dict[target_pos][0]),str(global_map_dict[target_pos][1]),str(global_map_dict[target_pos][2]),str(global_map_dict[target_pos][3]))
+    
     file_handle.close()
 
 def graph_updation(current_node,r,u,l,d):
@@ -216,16 +214,18 @@ def conversion_between_node_and_position(length_of_arena,division=True):
 #print("Debug :","Node <=> Positions",node_to_position,"\n",position_to_node)
 
 #Varible to monitor timing    
-timings = [x*0.25 for x in range(1,720)]
+time=0
 
-#Looping through available timings
-for time in timings:
+for i in range(5):
+    print("I",i)
+    #Looping through available timings
+    time=time+1
     #This While loop to holds the supervisor until required time is met    
     while supervisor.getTime() < time:
         if supervisor.step(timestep) == -1:
             quit()
     #Code to receive messages from MYPUCK1
-    if receiver1.getQueueLength()>0:
+    if receiver1.getQueueLength()>0 and i==4:
         received_data1 = receiver1.getData()
         message1 = struct.unpack("? f f ? ? ? ?",received_data1)
         #Check which node the robot is present at based on input message about the robot's position
@@ -246,7 +246,7 @@ for time in timings:
         #print("Debug :","Queue lenght",receiver1.getQueueLength())
     
     #Code to receive messages from MYPUCK2
-    if receiver2.getQueueLength()>0:
+    if receiver2.getQueueLength()>0 and i==4:
         received_data2 = receiver2.getData()
         message2 = struct.unpack("? f f ? ? ? ?",received_data2)
         #Check which node the robot is present at based on input message about the robot's position
@@ -266,7 +266,7 @@ for time in timings:
         #print("Debug :","Queue lenght",receiver2.getQueueLength())
     
     #Code to receive messages from MYPUCK3
-    if receiver3.getQueueLength()>0:
+    if receiver3.getQueueLength()>0 and i==4:
         received_data3 = receiver3.getData()
         message3 = struct.unpack("? f f ? ? ? ?",received_data3)
         #Check which node the robot is present at based on input message about the robot's position
@@ -286,7 +286,7 @@ for time in timings:
         #print("Debug :","Queue lenght",receiver3.getQueueLength())
     
     #Code to receive messages from MYPUCK4
-    if receiver4.getQueueLength()>0:
+    if receiver4.getQueueLength()>0 and i==4:
         received_data4 = receiver4.getData()
         message4 = struct.unpack("? f f ? ? ? ?",received_data4)
         #Check which node the robot is present at based on input message about the robot's position
@@ -304,67 +304,87 @@ for time in timings:
         visited[current_node4] = True
         receiver4.nextPacket()
         #print("Debug :","Queue lenght",receiver4.getQueueLength())
-    
+        
     #Start changing the postions of robots only when the graph of nodes is not empty
     if bool(graph):        
         #print("Debug :","Graph =",graph)
         #print("Debug :","Global map dict =",global_map_dict)
-        
-        #Calling function to receive next node the robot has to translate to
-        next_node1 = next_node_generator(current_node1,1)
-        next_node2 = next_node_generator(current_node2,2)
-        next_node3 = next_node_generator(current_node3,3)
-        next_node4 = next_node_generator(current_node4,4)
-        
+            
+        if i==4:
+            #Calling function to receive next node the robot has to translate to
+            next_node1 = next_node_generator(current_node1,1)
+            next_node2 = next_node_generator(current_node2,2)
+            next_node3 = next_node_generator(current_node3,3)
+            next_node4 = next_node_generator(current_node4,4)
+            
+        else:
+            (next_node1,next_node2,next_node3,next_node4) = (current_node1,current_node2,current_node3,current_node4)
+            
         #Debug/Monitor statements for each of the robots
         #print("Debug : First robot","Current node =",current_node1,"Next node =",next_node1)
         #print("Debug : Second robot","Current node =",current_node2,"Next node =",next_node2)
         #print("Debug : Third robot","Current node =",current_node3,"Next node =",next_node3)
         #print("Debug : Fourth robot","Current node =",current_node4,"Next node =",next_node4)
+            
+        if any([message1[0],message2[0],message3[0],message4[0]]):
+            print([message1[0],message2[0],message3[0],message4[0]])
+            #Write the Global Map data to a test file
+            write_map_to_file()
+            #Stop supervisor if target is found and reached
+            map_generator.generate_map()
+            supervisor.simulationSetMode(SIMULATION_MODE_PAUSE)
+            supervisor.simulationReset()
+            quit()
         
-        for index,message in enumerate([message1[0],message2[0],message3[0],message4[0]]):
-            if message:
-                message_to_current_node_dict = {1:current_node1,2:current_node2,3:current_node3,4:current_node4}
-                target_pos = node_to_position[message_to_current_node_dict[index+1]]
-                target_val = global_map_dict[(target_pos[0],target_pos[2])]
-                del global_map_dict[(target_pos[0],target_pos[2])]
-                global_map_dict[(target_pos[0],target_pos[2])] = target_val
-                #Write the Global Map data to a test file
-                write_map_to_file(node_to_position[message_to_current_node_dict[index+1]])
-                #Stop supervisor if target is found and reached
-                #map_generator.generate_map(global_map_dict)
-                map_generator.generate_map()
-                supervisor.simulationSetMode(0)
-                supervisor.simulationReset()
-                exit()
-                #quit()
-        
-        
-        if current_node1 == homenode1 and flag and time>4:
+        if current_node1 == homenode1 and flag and i !=4:
             print("Robot 1 has explored as much as it could and has returned to it's starting position")
-        if current_node2 == homenode2 and flag:
+        if current_node2 == homenode2 and flag and i!=4:
             print("Robot 2 has explored as much as it could and has returned to it's starting position")
-        if current_node3 == homenode3 and flag:
+        if current_node3 == homenode3 and flag and i !=4:
             print("Robot 3 has explored as much as it could and has returned to it's starting position")
-        if current_node4 == homenode4 and flag:
+        if current_node4 == homenode4 and flag and i !=4:
             print("Robot 4 has explored as much as it could and has returned to it's starting position")
-        if (True not in first_run):
-            flag = True
+            
         #Setting the robots to their respective next node
         trans_field1.setSFVec3f(list(node_to_position[next_node1]))
         trans_field2.setSFVec3f(list(node_to_position[next_node2]))
         trans_field3.setSFVec3f(list(node_to_position[next_node3]))
-        trans_field4.setSFVec3f(list(node_to_position[next_node4]))
+        trans_field4.setSFVec3f(list(node_to_position[next_node4]))    
+            
+        if i==4:    
+            #Setting the robot's orientation based on position of next node
+            rot_field1.setSFRotation(list(next_direction(current_node1,next_node1)))
+            rot_field2.setSFRotation(list(next_direction(current_node2,next_node2)))
+            rot_field3.setSFRotation(list(next_direction(current_node3,next_node3)))
+            rot_field4.setSFRotation(list(next_direction(current_node4,next_node4)))
         
-        #Setting the robot's orientation based on position of next node
-        rot_field1.setSFRotation(list(next_direction(current_node1,next_node1)))
-        rot_field2.setSFRotation(list(next_direction(current_node2,next_node2)))
-        rot_field3.setSFRotation(list(next_direction(current_node3,next_node3)))
-        rot_field4.setSFRotation(list(next_direction(current_node4,next_node4)))
-        
+        elif i ==0:
+            rot_field1.setSFRotation(list(right))
+            rot_field2.setSFRotation(list(right))
+            rot_field3.setSFRotation(list(right))
+            rot_field4.setSFRotation(list(right))
+        elif i ==1:
+            rot_field1.setSFRotation(list(up))
+            rot_field2.setSFRotation(list(up))
+            rot_field3.setSFRotation(list(up))
+            rot_field4.setSFRotation(list(up))
+        elif i ==2:
+            rot_field1.setSFRotation(list(left))
+            rot_field2.setSFRotation(list(left))
+            rot_field3.setSFRotation(list(left))
+            rot_field4.setSFRotation(list(left))
+        elif i ==3:
+            rot_field1.setSFRotation(list(down))
+            rot_field2.setSFRotation(list(down))
+            rot_field3.setSFRotation(list(down))
+            rot_field4.setSFRotation(list(down))
+            
         #Resetting Physics dependencies for each of the robots so that it doesn't behave in unexpected ways
         robot_node1.resetPhysics()
         robot_node2.resetPhysics()
         robot_node3.resetPhysics()
         robot_node4.resetPhysics()
-        
+        if (True not in first_run) and i==4:
+            flag = True
+
+            
