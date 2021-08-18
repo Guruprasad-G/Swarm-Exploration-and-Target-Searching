@@ -4,6 +4,8 @@
 from controller import Supervisor
 #Importing struct library required to convert bytes to message on reception of message
 import struct
+# import dictionary for graph
+from collections import defaultdict
 #Importing python script to generate map
 import map_generator
 #Creating instance of the supervisor class
@@ -64,7 +66,7 @@ global_map_dict = {}
 visited = [False for i in range(length_of_arena*length_of_arena)]
 #print("Debug: Visited =",visited,"Length of visited =",len(visited))
 
-#Stack code from YouTube
+#Code for implementing the Stack data structure
 class Stack():
     def __init__(self):
         self.stack = list()
@@ -91,11 +93,6 @@ stack4 = Stack()
 #Dictionary that corresponds robot to their respective stack
 stack_access_dict = {1:stack1,2:stack2,3:stack3,4:stack4}
 
-#Graph code from GeeksForGeeks
-  
-# import dictionary for graph
-from collections import defaultdict
-  
 # function for adding edge to graph
 graph = defaultdict(set)
 def addEdge(graph,u,v):
@@ -113,8 +110,8 @@ def generate_edges(graph):
     return edges
 
 #Functions
-def next_node_generator(current_node,robot_number):
-    '''This function updates the nodes visited by a robot and checks the possible path it can go.'''
+def next_node_generator(current_node,robot_number,conflict_avoider=[]):
+    '''This function performs DFS operation by updating the nodes visited by a robot and checking the possible path it can go.'''
     '''It also keeps a track of nodes visited for backtracking in case of deadends'''
     global visited
     global graph
@@ -129,7 +126,7 @@ def next_node_generator(current_node,robot_number):
     for node in graph[current_node]:
         #If one of the connected node is not visited, return it
         #print("Debug: Node =",node)
-        if (not visited[node]):
+        if (not visited[node]) and (node not in conflict_avoider):
             #print("Debug: ","Node to be returned =",node)
             if current_node == node:
                 break
@@ -216,11 +213,12 @@ def conversion_between_node_and_position(length_of_arena,division=True):
 #print("Debug :","Node <=> Positions",node_to_position,"\n",position_to_node)
 
 #Varible to monitor timing    
-timings = [x*0.25 for x in range(1,720)]
+timings = range(1,720)
 
 #Looping through available timings
 for time in timings:
     #This While loop to holds the supervisor until required time is met    
+    conflict_avoider = []
     while supervisor.getTime() < time:
         if supervisor.step(timestep) == -1:
             quit()
@@ -312,9 +310,12 @@ for time in timings:
         
         #Calling function to receive next node the robot has to translate to
         next_node1 = next_node_generator(current_node1,1)
-        next_node2 = next_node_generator(current_node2,2)
-        next_node3 = next_node_generator(current_node3,3)
-        next_node4 = next_node_generator(current_node4,4)
+        conflict_avoider.append(next_node1)
+        next_node2 = next_node_generator(current_node2,2,conflict_avoider)
+        conflict_avoider.append(next_node2)
+        next_node3 = next_node_generator(current_node3,3,conflict_avoider)
+        conflict_avoider.append(next_node3)
+        next_node4 = next_node_generator(current_node4,4,conflict_avoider)
         
         #Debug/Monitor statements for each of the robots
         #print("Debug : First robot","Current node =",current_node1,"Next node =",next_node1)
@@ -337,8 +338,6 @@ for time in timings:
                 supervisor.simulationSetMode(0)
                 supervisor.simulationReset()
                 exit()
-                #quit()
-        
         
         if current_node1 == homenode1 and flag and time>4:
             print("Robot 1 has explored as much as it could and has returned to it's starting position")
@@ -350,6 +349,7 @@ for time in timings:
             print("Robot 4 has explored as much as it could and has returned to it's starting position")
         if (True not in first_run):
             flag = True
+        
         #Setting the robots to their respective next node
         trans_field1.setSFVec3f(list(node_to_position[next_node1]))
         trans_field2.setSFVec3f(list(node_to_position[next_node2]))

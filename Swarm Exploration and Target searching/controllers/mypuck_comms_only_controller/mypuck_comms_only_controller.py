@@ -26,7 +26,6 @@ left_sensor.enable(timeStep)
 down_sensor = robot.getDevice("down_sensor")
 down_sensor.enable(timeStep)
 speaker = robot.getDevice("speaker")
-#speaker.enable(timeStep)
 
 #Declaring standandard values (Standard Right, Up, Left and Down values got from the compass)
 right = (0.0, -0.0, 1.0)
@@ -113,8 +112,11 @@ while robot.step(timeStep) != -1:
                 if target_pos_img[0]>=125:
                     #Setting the done varibale to True since target is detected and robot is near the target
                     done = True
-                    #Speaker sound is played only when sound file is presnt along with proto files
-                    speaker.playSound(speaker,speaker, "test4.wav", 1.0, 1.0, 0.0, True)
+                    try:
+                        #Speaker sound is played only when sound file is presnt along with proto files
+                        speaker.playSound(speaker,speaker, "target_found.wav", 1.0, 1.0, 0.0, True)
+                    except:
+                        print("Audio file not found. Try including the 'target_found.wav' file in Webots\projects\robots\gctronic\e-puck\protos")
                     #print("Target is at position","X =",x_pos_of_target,"Y =",y_pos_of_target,"Z =",z_pos_of_target)
                     print("Relative_pos =",target_pos,"Model =",target_model)
         #Varibale to store data regarding Clear-path or Wall in all four directions

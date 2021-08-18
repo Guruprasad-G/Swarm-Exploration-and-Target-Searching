@@ -10,9 +10,9 @@ consoles: Console:All:All
 renderingDevicePerspectives: E-PUCK1:camera;0;1;0;0
 renderingDevicePerspectives: E-PUCK1:colour_camera;1;0.26;0.00649351;0
 renderingDevicePerspectives: E-PUCK2(1):camera;0;1;0;0
-renderingDevicePerspectives: E-PUCK2(1):colour_camera;1;0.316;0.860104;0.833333
+renderingDevicePerspectives: E-PUCK2(1):colour_camera;1;0.316;0.829114;0.833333
 renderingDevicePerspectives: E-PUCK2(2):camera;0;1;0;0
-renderingDevicePerspectives: E-PUCK2(2):colour_camera;1;0.272;0.879102;0
+renderingDevicePerspectives: E-PUCK2(2):colour_camera;1;0.272;0.852321;0
 renderingDevicePerspectives: E-PUCK2:camera;0;1;0;0
 renderingDevicePerspectives: E-PUCK2:colour_camera;1;0.32;0;0.831276
-renderingDevicePerspectives: LAPTOP:display;0;0.780645;0;0
+renderingDevicePerspectives: LAPTOP:display;0;0.764516;0;0

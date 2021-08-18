@@ -6,8 +6,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.999902250087971 -0.013742498893370604 -0.0025756539322310656 1.1769846391153733
-  position -0.333837274565461 10.680314760555335 4.749850889842724
+  orientation -0.9999007663487081 -0.013859201678678039 -0.0025258630398732563 1.166985624001149
+  position -0.3514668358101861 11.989691752850645 5.425958845384487
   follow "E-PUCK1"
 }
 TexturedBackground {
@@ -61,8 +61,8 @@ DEF Laptop Robot {
         }
       ]
       endPoint Solid {
-        translation 0.014499999999999274 0.12999981546234013 0.10000047069013807
-        rotation 0.8347961693832916 -0.5505591299606089 -1.601097469812471e-08 5.307156870259904e-06
+        translation 0.01449999999999919 0.12999981546233946 0.1000004706901374
+        rotation 0.8347956688184842 -0.550559888951147 -1.601099677055804e-08 5.307156870259904e-06
         children [
           Shape {
             appearance PBRAppearance {
@@ -503,138 +503,6 @@ DEF EPUCK4 E-puck {
       rotation 0 1 0 3.14159
     }
   ]
-}
-DEF mybot Robot {
-  translation 1.16525 0.0397998 -4.39262
-  rotation -0.562737841661225 0.11854091644811797 -0.8180917874481483 -1.8262004054017278e-07
-  children [
-    DEF WHEEL HingeJoint {
-      jointParameters HingeJointParameters {
-        position 2.2102755180892345e-11
-        anchor 0.06 0 -0.05
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint DEF Wheels Solid {
-        translation 0.06 0 -0.05
-        rotation 3.5474782594028984e-09 -3.547491290042062e-09 1 1.5708
-        children [
-          DEF Wheel Shape {
-            appearance PBRAppearance {
-              baseColor 1 1 0
-            }
-            geometry Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        name "solid(3)"
-        boundingObject USE Wheel
-        physics Physics {
-        }
-      }
-    }
-    DEF WHEEL HingeJoint {
-      jointParameters HingeJointParameters {
-        position 2.875185241059213e-07
-        anchor 0.06 0 -0.05
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint DEF Wheels Solid {
-        translation -0.06 0 -0.05
-        rotation 1.437587339966735e-07 -1.4375926205296408e-07 0.9999999999999793 1.5708000000000204
-        children [
-          DEF Wheel Shape {
-            appearance PBRAppearance {
-              baseColor 1 1 0
-            }
-            geometry Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        name "solid(2)"
-        boundingObject USE Wheel
-        physics Physics {
-        }
-      }
-    }
-    DEF WHEEL HingeJoint {
-      jointParameters HingeJointParameters {
-        position -2.8835377818836605e-07
-        anchor 0.06 0 -0.05
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint DEF Wheels Solid {
-        translation -0.0599999999999887 2.883537781883379e-08 0.049999999999987374
-        rotation -1.4417635950387503e-07 1.4417688909418104e-07 0.9999999999999793 1.5708000000000208
-        children [
-          DEF Wheel Shape {
-            appearance PBRAppearance {
-              baseColor 1 1 0
-            }
-            geometry Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        name "solid(1)"
-        boundingObject USE Wheel
-        physics Physics {
-        }
-      }
-    }
-    DEF WHEEL HingeJoint {
-      jointParameters HingeJointParameters {
-        position -1.4714455165432128e-07
-        anchor 0.06 0 -0.05
-      }
-      device [
-        RotationalMotor {
-        }
-      ]
-      endPoint DEF Wheels Solid {
-        translation 0.06 1.4714455165432921e-08 0.05000000000000457
-        rotation -7.357200558159767e-08 7.357227582716037e-08 0.9999999999999946 1.570800000000005
-        children [
-          DEF Wheel Shape {
-            appearance PBRAppearance {
-              baseColor 1 1 0
-            }
-            geometry Cylinder {
-              height 0.02
-              radius 0.04
-            }
-          }
-        ]
-        boundingObject USE Wheel
-        physics Physics {
-        }
-      }
-    }
-    DEF BODY Shape {
-      appearance PBRAppearance {
-        baseColor 1 0 1
-      }
-      geometry Box {
-        size 0.1 0.03 0.2
-      }
-    }
-  ]
-  boundingObject USE BODY
-  physics Physics {
-  }
 }
 Wall {
   translation 4 -1.06581e-14 0.5
