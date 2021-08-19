@@ -38,4 +38,4 @@ To locate a target in a multi-path (maze like) environment using a swarm of robo
   - The project is implemented on an existing robot(E-puck) and could have been implemented on a custom built robot.
   - Traget detection through camera of the robot is done through in-built 'recognition node' feature of Webots. (A better way would be to use OpenCV)
 
-
+## Wiki : Coming Soon
