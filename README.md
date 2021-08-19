@@ -1,5 +1,5 @@
 ***
-# Welcome to this Swarm-Robots repo!
+# Welcome to Swarm-Robots repo!
 ***
 ## Brief Intro :
 
