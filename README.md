@@ -1,5 +1,5 @@
 ***
-# Welcome to Swarm-Robots repo!
+# Welcome the Swarm Ecploration and Searching repo!
 ***
 ## Brief Intro :
 
