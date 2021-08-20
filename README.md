@@ -16,7 +16,7 @@ This is a simulation project under the title "Swarm Exploration and Searching", 
 To locate a target in a multi-path (maze like) environment using a swarm of robots that co-ordinate and solve the task effectively.
 
 ### Practical applications :
-  In military situations were an intelligence file or an object of interest has to be located inside an enemy building or in a region affected by radiation, military personnel cannot be deployed. Instead a swarm of robots can be used as they are expendable and helps in locating the object faster when compared to a single robot.
+In military situations were an intel or an object of interest has to be located inside an enemy building or in a region affected by radiation, military personnel cannot be deployed. Instead a swarm of robots can be used as they are expendable and helps in locating the object faster when compared to a single robot.
 
 ### Constraints and Assumptions : 
   - The arena is a square arena and it can be of any size.  
@@ -35,7 +35,7 @@ To locate a target in a multi-path (maze like) environment using a swarm of robo
 ### Limitations :
   - Continous movement of the robot couldn't be achived.
   - The commuincation is centralized.
-  - The project is implemented on an existing robot(E-puck) and could have been implemented on a custom built robot.
+  - The project is implemented on an existing robot(E-puck)(A better way would be to use a custom built robot).
   - Traget detection through camera of the robot is done through in-built 'recognition node' feature of Webots. (A better way would be to use OpenCV)
 
 ## Wiki : Coming Soon
