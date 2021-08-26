@@ -21,7 +21,8 @@ In military situations were an intel or an object of interest has to be located 
 ### Constraints and Assumptions : 
   - The arena is a square arena and it can be of any size.  
   - There are no obstacles in the path of the robot.  
-  - Minimum distance between the walls is 1m.  
+  - Minimum distance between the walls is 1m.
+  - The distance sensors mounted on the robot can only measure upto 0.5m.  
   - The way the walls are placed or the expected distance/hurestic distance toward the target... are not given.
 
 ### Feature of the project :
@@ -32,10 +33,10 @@ In military situations were an intel or an object of interest has to be located 
   - Map data collected can be exported to a text file.
   - Based on the exported data or directly from the program, the arena map can be recreated, with the starting postions of the robots and the target location.
 
-### Limitations :
+### Limitations/Drawback :
   - Continous movement of the robot couldn't be achived.
   - The commuincation is centralized.
   - The project is implemented on an existing robot(E-puck)(A better way would be to use a custom built robot).
-  - Traget detection through camera of the robot is done through in-built 'recognition node' feature of Webots. (A better way would be to use OpenCV)
+  - Target detection through camera of the robot is done through in-built 'recognition node' feature of Webots. (A better way would be to use OpenCV)
 
 ## Wiki : Coming Soon
