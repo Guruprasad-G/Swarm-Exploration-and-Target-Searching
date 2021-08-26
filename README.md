@@ -1,10 +1,10 @@
 ***
-# Welcome the Swarm Ecploration and Searching repo!
+# Welcome the Swarm Exploration and Target Searching repo!
 ***
 ## Brief Intro :
 
 ### Description : 
-This is a simulation project under the title "Swarm Exploration and Searching", carried out by 3rd year ECE students of Don Bosco Institute of Technology, Bangalore as a mini project.
+This is a simulation project under the title "Swarm Exploration and Target Searching", carried out by 3rd year ECE students of Don Bosco Institute of Technology, Bangalore as a mini project.
 
 ### Software used : [Webots](https://cyberbotics.com/#cyberbotics)
 
