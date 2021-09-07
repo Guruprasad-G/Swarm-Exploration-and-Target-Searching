@@ -1,5 +1,5 @@
 ***
-# Welcome the Swarm Exploration and Target Searching repo!
+# Welcome to Swarm Exploration and Target Searching repo
 ***
 ## Brief Intro :
 
